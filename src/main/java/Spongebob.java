@@ -23,5 +23,6 @@ public class Spongebob {
         }
         System.out.println("Goodbye! Have a great day under the sea!");
         printHorizontalLine();
+        scanner.close();
     }
 }
