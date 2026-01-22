@@ -21,4 +21,7 @@ reservation birthday party /to 3pm
 delivery /by 3pm
 reservation /from 3pm
 reservation /to 3pm
+delete 2
+delete asdfg
+delete
 bye
