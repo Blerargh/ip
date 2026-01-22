@@ -2,19 +2,16 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Spongebob {
-    private ArrayList<String> krustyKrabOrderList = new ArrayList<>();
-
-    enum Actions {
-        LIST,
-        BYE,
-    }
+    private ArrayList<KrustyKrabOrder> krustyKrabOrderList = new ArrayList<>();
 
     public void printOrders() {
         if (this.krustyKrabOrderList.isEmpty()) {
             System.out.println("How about ordering a Krabby Patty first?");
         } else {
             for (int i = 0; i < this.krustyKrabOrderList.size(); i++) {
-                System.out.println("Krabby Patty Order " + (i + 1) + ": " + this.krustyKrabOrderList.get(i));
+                System.out.println("Krabby Patty Order " 
+                        + (i + 1) + ": " 
+                        + this.krustyKrabOrderList.get(i).getOrder());
             }
         }
     }
@@ -41,12 +38,17 @@ public class Spongebob {
             String upperCaseUserInput = userInput.trim().toUpperCase();
 
             // Handle order
-            if (upperCaseUserInput.equals(Actions.LIST.name())) {
+            if (upperCaseUserInput.equals(Actions.ActionType.LIST.name())) {
                 spongebob.printOrders();
-            } else if (upperCaseUserInput.equals(Actions.BYE.name())) {
+            } else if (upperCaseUserInput.equals(Actions.ActionType.BYE.name())) {
                 break;
+            } else if (upperCaseUserInput.equals(Actions.ActionType.MARK.name())) {
+                // tbi
+            } else if (upperCaseUserInput.equals(Actions.ActionType.UNMARK.name())) {
+                // tbi
             } else {
-                spongebob.krustyKrabOrderList.add(userInput);
+                KrustyKrabOrder newOrder = new KrustyKrabOrder(userInput);
+                spongebob.krustyKrabOrderList.add(newOrder);
                 System.out.println("Krabby Patty order received!");
             }
             printHorizontalLine();
