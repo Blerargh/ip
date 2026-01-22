@@ -2,19 +2,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Spongebob {
-    private ArrayList<String> textList = new ArrayList<>();
+    private ArrayList<String> krustyKrabOrderList = new ArrayList<>();
 
     enum Actions {
         LIST,
         BYE,
     }
 
-    public static void printTextList(ArrayList<String> textList) {
-        if (textList.isEmpty()) {
+    public static void printOrders(ArrayList<String> krustyKrabOrderList) {
+        if (krustyKrabOrderList.isEmpty()) {
             System.out.println("How about ordering a Krabby Patty first?");
         } else {
-            for (int i = 0; i < textList.size(); i++) {
-                System.out.println("Krabby Patty Order " + (i + 1) + ": " + textList.get(i));
+            for (int i = 0; i < krustyKrabOrderList.size(); i++) {
+                System.out.println("Krabby Patty Order " + (i + 1) + ": " + krustyKrabOrderList.get(i));
             }
         }
     }
@@ -29,7 +29,7 @@ public class Spongebob {
         
         // Greeting message
         printHorizontalLine();
-        System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you today?");
+        System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
         printHorizontalLine();
 
         // Parse user input
@@ -42,11 +42,11 @@ public class Spongebob {
 
             // Handle order
             if (upperCaseUserInput.equals(Actions.LIST.name())) {
-                printTextList(spongebob.textList);
+                printOrders(spongebob.krustyKrabOrderList);
             } else if (upperCaseUserInput.equals(Actions.BYE.name())) {
                 break;
             } else {
-                spongebob.textList.add(userInput);
+                spongebob.krustyKrabOrderList.add(userInput);
                 System.out.println("Krabby Patty order received!");
             }
             printHorizontalLine();
