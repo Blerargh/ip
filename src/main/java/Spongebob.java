@@ -155,7 +155,7 @@ public class Spongebob {
                     System.out.println("What are you saying, Mr. Krabs?");
                     break;
                 case EMPTY:
-                    System.out.println("Did you make this request?");
+                    System.out.println("Did you make a request?");
                     break;
             }
             printHorizontalLine();
