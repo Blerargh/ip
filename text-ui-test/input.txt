@@ -1,3 +1,4 @@
+list
 abcdefg
 do something
 order krabby patty
@@ -17,4 +18,7 @@ delivery invalid
 reservation invalid
 reservation birthday party /from 3pm
 reservation birthday party /to 3pm
+delivery /by 3pm
+reservation /from 3pm
+reservation /to 3pm
 bye

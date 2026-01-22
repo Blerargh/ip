@@ -3,12 +3,13 @@ Hello, I'm Spongebob Squarepants!
 What can I do for you at the Krusty Krab today?
 _________________________________________________________
 _________________________________________________________
-Krabby Patty task received!
-[ ] abcdefg
+How about making a request first?
 _________________________________________________________
 _________________________________________________________
-Krabby Patty task received!
-[ ] do something
+What are you saying, Mr. Krabs?
+_________________________________________________________
+_________________________________________________________
+What are you saying, Mr. Krabs?
 _________________________________________________________
 _________________________________________________________
 Krabby Patty Order received!
@@ -23,37 +24,31 @@ Krusty Krab Reservation made!
 [R][ ] squidward dinner (from: 1am to: 3am)
 _________________________________________________________
 _________________________________________________________
-Krabby Patty Task 1: [ ] abcdefg
-Krabby Patty Task 2: [ ] do something
-Krabby Patty Task 3: [O][ ] krabby patty
-Krabby Patty Task 4: [D][ ] patrick (by: 4pm)
-Krabby Patty Task 5: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 1: [O][ ] krabby patty
+Krabby Patty Task 2: [D][ ] patrick (by: 4pm)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
 _________________________________________________________
 _________________________________________________________
 Task complete!
-[X] do something
+[D][X] patrick (by: 4pm)
 _________________________________________________________
 _________________________________________________________
 This task is already completed!
-[X] do something
+[D][X] patrick (by: 4pm)
 _________________________________________________________
 _________________________________________________________
-Krabby Patty Task 1: [ ] abcdefg
-Krabby Patty Task 2: [X] do something
-Krabby Patty Task 3: [O][ ] krabby patty
-Krabby Patty Task 4: [D][ ] patrick (by: 4pm)
-Krabby Patty Task 5: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 1: [O][ ] krabby patty
+Krabby Patty Task 2: [D][X] patrick (by: 4pm)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
 _________________________________________________________
 _________________________________________________________
 Task cancelled!
-[ ] do something
+[D][ ] patrick (by: 4pm)
 _________________________________________________________
 _________________________________________________________
-Krabby Patty Task 1: [ ] abcdefg
-Krabby Patty Task 2: [ ] do something
-Krabby Patty Task 3: [O][ ] krabby patty
-Krabby Patty Task 4: [D][ ] patrick (by: 4pm)
-Krabby Patty Task 5: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 1: [O][ ] krabby patty
+Krabby Patty Task 2: [D][ ] patrick (by: 4pm)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
 _________________________________________________________
 _________________________________________________________
 What Krabby Patty order would you like to make?
@@ -66,16 +61,25 @@ What reservation would you like to make?
 _________________________________________________________
 _________________________________________________________
 This task is not completed yet!
-[ ] abcdefg
+[O][ ] krabby patty
 _________________________________________________________
 _________________________________________________________
-By when should I deliver the order?
+By when should I deliver the Krabby Patty?
+_________________________________________________________
+_________________________________________________________
+From when to when do you want to reserve the Krusty Krab?
 _________________________________________________________
 _________________________________________________________
 From when to when do you want to reserve the Krusty Krab?
 _________________________________________________________
 _________________________________________________________
 From when to when do you want to reserve the Krusty Krab?
+_________________________________________________________
+_________________________________________________________
+What delivery order would you like to make?
+_________________________________________________________
+_________________________________________________________
+What reservation would you like to make?
 _________________________________________________________
 _________________________________________________________
 From when to when do you want to reserve the Krusty Krab?
