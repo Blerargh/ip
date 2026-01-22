@@ -1,8 +1,3 @@
-public class Actions {
-    enum ActionType {
-        LIST,
-        MARK,
-        UNMARK,
-        BYE,
-    }
+public enum Actions {
+    EMPTY, LIST, MARK, UNMARK, BYE
 }

@@ -35,29 +35,43 @@ public class Spongebob {
             String userInput = scanner.nextLine();
             printHorizontalLine();
 
-            String upperCaseUserInput = userInput.trim().toUpperCase();
+            try {
+                Actions action;
+                if (userInput.trim().isEmpty()) {
+                    action = Actions.EMPTY;
+                } else {
+                    action = Actions.valueOf(userInput.trim().toUpperCase());
+                }
 
-            // Handle order
-            if (upperCaseUserInput.isEmpty()) {
-                System.out.println("Did you say something?");
-            } else if (upperCaseUserInput.equals(Actions.ActionType.LIST.name())) {
-                spongebob.printOrders();
-            } else if (upperCaseUserInput.equals(Actions.ActionType.BYE.name())) {
-                break;
-            } else if (upperCaseUserInput.equals(Actions.ActionType.MARK.name())) {
-                // tbi
-            } else if (upperCaseUserInput.equals(Actions.ActionType.UNMARK.name())) {
-                // tbi
-            } else {
+                // Handle order
+                switch (action) {
+                    case EMPTY:
+                        System.out.println("Did you say something?");
+                        break;
+                    case LIST:
+                        spongebob.printOrders();
+                        break;
+                    case MARK:
+                        // tbi
+                        break;
+                    case UNMARK:
+                        // tbi
+                        break;
+                    case BYE:
+                        System.out.println("Goodbye! Have a great day under the sea!");
+                        break;
+                }
+                if (action.equals(Actions.BYE)) {
+                    break;
+                }
+            } catch (IllegalArgumentException e) {
                 KrustyKrabOrder newOrder = new KrustyKrabOrder(userInput);
                 spongebob.krustyKrabOrderList.add(newOrder);
                 System.out.println("Krabby Patty order received!");
-            }
-            printHorizontalLine();
+            } finally {
+                printHorizontalLine();
+            }            
         }
-
-        System.out.println("Goodbye! Have a great day under the sea!");
-        printHorizontalLine();
         scanner.close();
     }
 }
