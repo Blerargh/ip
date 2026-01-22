@@ -4,7 +4,7 @@ public enum Actions {
     MARK, 
     UNMARK, 
     BYE, 
-    ADD, 
+    ERROR, 
     MARK_ERROR, 
     UNMARK_ERROR, 
     ADD_ORDER, 
@@ -19,7 +19,7 @@ public enum Actions {
                 if (words.length == 1) {
                     return LIST;
                 }
-                return ADD;
+                return ERROR;
             case "mark":
                 if (words.length == 1) {
                     return MARK_ERROR;
@@ -38,7 +38,7 @@ public enum Actions {
                 if (words.length == 1) {
                     return BYE;
                 }
-                return ADD;
+                return ERROR;
             case "order":
                 return ADD_ORDER;
             case "delivery":
@@ -48,7 +48,7 @@ public enum Actions {
             case "":
                 return EMPTY;
             default:
-                return ADD;
+                return ERROR;
         }
     }
 }

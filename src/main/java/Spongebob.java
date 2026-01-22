@@ -100,10 +100,6 @@ public class Spongebob {
                 case LIST:
                     spongebob.printOrders();
                     break;
-                case ADD:
-                    spongebob.krustyKrabOrderList.add(new KrustyKrabTask(userInput));
-                    System.out.println("Krabby Patty task received!\n[ ] " + userInput);
-                    break;
                 case BYE:
                     System.out.println("Goodbye! Have a great day under the sea!");
                     printHorizontalLine();
@@ -154,6 +150,9 @@ public class Spongebob {
                     } catch (SpongebobException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+                case ERROR:
+                    System.out.println("What are you saying, Mr. Krabs?");
                     break;
                 case EMPTY:
                     System.out.println("Did you make this request?");
