@@ -1,5 +1,15 @@
 public enum Actions {
-    EMPTY, LIST, MARK, UNMARK, BYE, ADD, MARK_ERROR, UNMARK_ERROR;
+    EMPTY, 
+    LIST, 
+    MARK, 
+    UNMARK, 
+    BYE, 
+    ADD, 
+    MARK_ERROR, 
+    UNMARK_ERROR, 
+    ADD_ORDER, 
+    ADD_DELIVERY, 
+    ADD_RESERVATION;
 
     public static Actions fromString(String actionStr) {
         String[] words = actionStr.split(" ");
@@ -29,6 +39,12 @@ public enum Actions {
                     return BYE;
                 }
                 return ADD;
+            case "order":
+                return ADD_ORDER;
+            case "delivery":
+                return ADD_DELIVERY;
+            case "reservation":
+                return ADD_RESERVATION;
             case "":
                 return EMPTY;
             default:

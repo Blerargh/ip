@@ -90,6 +90,9 @@ public class Spongebob {
                 case UNMARK_ERROR:
                     System.out.println("I cannot fulfill this task cancellation request!");
                     break;
+                case ADD_ORDER:
+                case ADD_DELIVERY:
+                case ADD_RESERVATION:
                 case EMPTY:
                     System.out.println("Did you make this request?");
                     break;
