@@ -9,10 +9,43 @@ public class Spongebob {
             System.out.println("How about ordering a Krabby Patty first?");
         } else {
             for (int i = 0; i < this.krustyKrabOrderList.size(); i++) {
-                System.out.println("Krabby Patty Order " 
-                        + (i + 1) + ": " 
-                        + this.krustyKrabOrderList.get(i).getOrder());
+                String str = "Krabby Patty Order " + (i + 1) + ": ";
+                KrustyKrabOrder order = this.krustyKrabOrderList.get(i);
+                if (order.isCompleted()) {
+                    str += "[X] " + order.getOrder();
+                } else {
+                    str += "[ ] " + order.getOrder();
+                }
+                System.out.println(str);
             }
+        }
+    }
+
+    public void markOrder(int index) {
+        if (index >= 0 && index < this.krustyKrabOrderList.size()) {
+            KrustyKrabOrder order = this.krustyKrabOrderList.get(index);
+            if (!order.isCompleted()) {
+                order.complete();
+                System.out.println("Order complete!\n[X] " + order.getOrder());
+            } else {
+                System.out.println("This order is already completed!\n[X] " + order.getOrder());
+            }
+        } else {
+            System.out.println("Did you order this?");
+        }
+    }
+
+    public void unmarkOrder(int index) {
+        if (index >= 0 && index < this.krustyKrabOrderList.size()) {
+            KrustyKrabOrder order = this.krustyKrabOrderList.get(index);
+            if (order.isCompleted()) {
+                order.cancel();
+                System.out.println("Order cancelled!\n[ ] " + order.getOrder());
+            } else {
+                System.out.println("This order is not completed yet!\n[ ] " + order.getOrder());
+            }
+        } else {
+            System.out.println("Which order are you referring to?");
         }
     }
 
@@ -34,44 +67,39 @@ public class Spongebob {
         while (true) {
             String userInput = scanner.nextLine();
             printHorizontalLine();
-
-            try {
-                Actions action;
-                if (userInput.trim().isEmpty()) {
-                    action = Actions.EMPTY;
-                } else {
-                    action = Actions.valueOf(userInput.trim().toUpperCase());
-                }
-
-                // Handle order
-                switch (action) {
-                    case EMPTY:
-                        System.out.println("Did you say something?");
-                        break;
-                    case LIST:
-                        spongebob.printOrders();
-                        break;
-                    case MARK:
-                        // tbi
-                        break;
-                    case UNMARK:
-                        // tbi
-                        break;
-                    case BYE:
-                        System.out.println("Goodbye! Have a great day under the sea!");
-                        break;
-                }
-                if (action.equals(Actions.BYE)) {
+            Actions action = Actions.fromString(userInput);
+            switch (action) {
+                case LIST:
+                    spongebob.printOrders();
                     break;
-                }
-            } catch (IllegalArgumentException e) {
-                KrustyKrabOrder newOrder = new KrustyKrabOrder(userInput);
-                spongebob.krustyKrabOrderList.add(newOrder);
-                System.out.println("Krabby Patty order received!");
-            } finally {
-                printHorizontalLine();
-            }            
+                case ADD:
+                    spongebob.krustyKrabOrderList.add(new KrustyKrabOrder(userInput));
+                    System.out.println("Krabby Patty order received!\n[ ] " + userInput);
+                    break;
+                case BYE:
+                    System.out.println("Goodbye! Have a great day under the sea!");
+                    printHorizontalLine();
+                    scanner.close();
+                    return;
+                case MARK:
+                    int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    spongebob.markOrder(indexToMark);
+                    break;
+                case UNMARK:
+                    int indexToUnmark = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    spongebob.unmarkOrder(indexToUnmark);
+                    break;
+                case MARK_ERROR:
+                    System.out.println("Which order are you referring to?");
+                    break;
+                case UNMARK_ERROR:
+                    System.out.println("I cannot fulfill this order cancellation request!");
+                    break;
+                case EMPTY:
+                    System.out.println("Did you order something?");
+                    break;
+            }
+            printHorizontalLine();
         }
-        scanner.close();
     }
 }

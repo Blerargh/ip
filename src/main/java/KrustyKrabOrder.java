@@ -14,4 +14,12 @@ public class KrustyKrabOrder {
     public boolean isCompleted() {
         return this.isCompleted;
     }
+
+    public void complete() {
+        this.isCompleted = true;
+    }
+
+    public void cancel() {
+        this.isCompleted = false;
+    }
 }
