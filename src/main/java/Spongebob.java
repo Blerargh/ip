@@ -76,6 +76,15 @@ public class Spongebob {
         System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
     }
 
+    public void deleteTask(int index) {
+        if (index >= 0 && index < this.krustyKrabOrderList.size()) {
+            KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
+            System.out.println("Task removed!\n" + task.toString());
+        } else {
+            System.out.println("Did you make this request?");
+        }
+    }
+
     public static void printHorizontalLine() {
         System.out.println("_________________________________________________________");
     }
@@ -150,6 +159,13 @@ public class Spongebob {
                     } catch (SpongebobException e) {
                         System.out.println(e.getMessage());
                     }
+                    break;
+                case DELETE:
+                    int indexToDelete = Integer.parseInt(userInput.split(" ")[1]) - 1;
+                    spongebob.deleteTask(indexToDelete);
+                    break;
+                case DELETE_ERROR:
+                    System.out.println("Which task are you referring to?");
                     break;
                 case ERROR:
                     System.out.println("What are you saying, Mr. Krabs?");

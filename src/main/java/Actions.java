@@ -9,7 +9,9 @@ public enum Actions {
     UNMARK_ERROR, 
     ADD_ORDER, 
     ADD_DELIVERY, 
-    ADD_RESERVATION;
+    ADD_RESERVATION,
+    DELETE,
+    DELETE_ERROR;
 
     public static Actions fromString(String actionStr) {
         String[] words = actionStr.split(" ");
@@ -45,6 +47,13 @@ public enum Actions {
                 return ADD_DELIVERY;
             case "reservation":
                 return ADD_RESERVATION;
+            case "delete":
+                if (words.length == 1) {
+                    return DELETE_ERROR;
+                } else if (words.length == 2 && words[1].matches("\\d+")) {
+                    return DELETE;
+                }
+                return DELETE_ERROR;
             case "":
                 return EMPTY;
             default:
