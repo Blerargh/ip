@@ -44,6 +44,31 @@ public class Spongebob {
         }
     }
 
+    public void addOrder(String orderDetails) {
+        String taskDetails = orderDetails.trim();
+        KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
+        this.krustyKrabOrderList.add(newOrder);
+        System.out.println("Krabby Patty Order received!\n" + newOrder.toString());
+    }
+
+    public void addDelivery(String deliveryDetails) {
+        String taskDetails = deliveryDetails.split("/by")[0].trim();
+        String deliveryDeadline = deliveryDetails.split("/by")[1].trim();
+        KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliveryDeadline);
+        this.krustyKrabOrderList.add(newDelivery);
+        System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
+    }
+
+    public void addReservation(String reservationDetails) {
+        String taskDetails = reservationDetails.split("/from")[0].trim();
+        String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
+        String reservationEndTime = reservationDetails.split("/to")[1].trim();
+        KrustyKrabReservation newReservation = 
+                new KrustyKrabReservation(taskDetails, reservationStartTime, reservationEndTime);
+        this.krustyKrabOrderList.add(newReservation);
+        System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
+    }
+
     public static void printHorizontalLine() {
         System.out.println("_________________________________________________________");
     }
@@ -61,6 +86,7 @@ public class Spongebob {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();
+            userInput = userInput.trim();
             printHorizontalLine();
             Actions action = Actions.fromString(userInput);
             switch (action) {
@@ -91,8 +117,33 @@ public class Spongebob {
                     System.out.println("I cannot fulfill this task cancellation request!");
                     break;
                 case ADD_ORDER:
+                    try {
+                        String orderDetails = userInput.substring(6);
+                        spongebob.addOrder(orderDetails);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("What Krabby Patty order would you like to make?");
+                    }
+                    break;
                 case ADD_DELIVERY:
+                    try {
+                        String deliveryDetails = userInput.substring(9);
+                        spongebob.addDelivery(deliveryDetails);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("What delivery order would you like to make?");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("By when should I deliver the order?");
+                    } 
+                    break;
                 case ADD_RESERVATION:
+                    try {
+                        String reservationDetails = userInput.substring(12);
+                        spongebob.addReservation(reservationDetails);
+                    } catch (StringIndexOutOfBoundsException e) {
+                        System.out.println("What reservation would you like to make?");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("From when to when do you want to reserve the Krusty Krab?");
+                    }
+                    break;
                 case EMPTY:
                     System.out.println("Did you make this request?");
                     break;
