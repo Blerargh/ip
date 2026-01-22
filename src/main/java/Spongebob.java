@@ -38,7 +38,9 @@ public class Spongebob {
             String upperCaseUserInput = userInput.trim().toUpperCase();
 
             // Handle order
-            if (upperCaseUserInput.equals(Actions.ActionType.LIST.name())) {
+            if (upperCaseUserInput.isEmpty()) {
+                System.out.println("Did you say something?");
+            } else if (upperCaseUserInput.equals(Actions.ActionType.LIST.name())) {
                 spongebob.printOrders();
             } else if (upperCaseUserInput.equals(Actions.ActionType.BYE.name())) {
                 break;
