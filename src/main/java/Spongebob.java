@@ -9,12 +9,12 @@ public class Spongebob {
         BYE,
     }
 
-    public static void printOrders(ArrayList<String> krustyKrabOrderList) {
-        if (krustyKrabOrderList.isEmpty()) {
+    public void printOrders() {
+        if (this.krustyKrabOrderList.isEmpty()) {
             System.out.println("How about ordering a Krabby Patty first?");
         } else {
-            for (int i = 0; i < krustyKrabOrderList.size(); i++) {
-                System.out.println("Krabby Patty Order " + (i + 1) + ": " + krustyKrabOrderList.get(i));
+            for (int i = 0; i < this.krustyKrabOrderList.size(); i++) {
+                System.out.println("Krabby Patty Order " + (i + 1) + ": " + this.krustyKrabOrderList.get(i));
             }
         }
     }
@@ -42,7 +42,7 @@ public class Spongebob {
 
             // Handle order
             if (upperCaseUserInput.equals(Actions.LIST.name())) {
-                printOrders(spongebob.krustyKrabOrderList);
+                spongebob.printOrders();
             } else if (upperCaseUserInput.equals(Actions.BYE.name())) {
                 break;
             } else {
