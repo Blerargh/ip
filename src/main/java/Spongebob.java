@@ -26,7 +26,7 @@ public class Spongebob {
                 System.out.println("This task is already completed!\n" + task.toString());
             }
         } else {
-            System.out.println("Did you make this request?");
+            System.out.println("Which task are you referring to?");
         }
     }
 
@@ -81,7 +81,7 @@ public class Spongebob {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
             System.out.println("Task removed!\n" + task.toString());
         } else {
-            System.out.println("Did you make this request?");
+            System.out.println("Which task are you referring to?");
         }
     }
 
