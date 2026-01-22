@@ -1,0 +1,20 @@
+abcdefg
+do something
+order krabby patty
+delivery patrick /by 4pm
+reservation squidward dinner /from 1am /to 3am
+list
+mark 2
+mark 2
+list
+unmark 2
+list
+order
+delivery
+reservation
+unmark 1
+delivery invalid
+reservation invalid
+reservation birthday party /from 3pm
+reservation birthday party /to 3pm
+bye
