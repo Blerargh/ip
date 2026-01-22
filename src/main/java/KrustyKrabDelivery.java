@@ -1,9 +1,9 @@
 public class KrustyKrabDelivery extends KrustyKrabTask {
-    String deliveryTime;
+    String deliveryDeadline;
 
-    public KrustyKrabDelivery(String delivery, String deliveryTime) {
+    public KrustyKrabDelivery(String delivery, String deliveryDeadline) {
         super(delivery);
-        this.deliveryTime = deliveryTime;
+        this.deliveryDeadline = deliveryDeadline;
     }
 
     @Override
@@ -14,7 +14,7 @@ public class KrustyKrabDelivery extends KrustyKrabTask {
         } else {
             str += "[ ] " + this.getTaskName();
         }
-        str += " (by: " + this.deliveryTime + ")";
+        str += " (by: " + this.deliveryDeadline + ")";
         return str;
     }
 }
