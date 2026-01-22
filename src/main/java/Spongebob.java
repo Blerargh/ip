@@ -51,16 +51,23 @@ public class Spongebob {
         System.out.println("Krabby Patty Order received!\n" + newOrder.toString());
     }
 
-    public void addDelivery(String deliveryDetails) {
+    public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
         String taskDetails = deliveryDetails.split("/by")[0].trim();
+        if (taskDetails.isEmpty()) {
+            throw new SpongebobException("What delivery order would you like to make?");
+        }
+
         String deliveryDeadline = deliveryDetails.split("/by")[1].trim();
         KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliveryDeadline);
         this.krustyKrabOrderList.add(newDelivery);
         System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
     }
 
-    public void addReservation(String reservationDetails) {
+    public void addReservation(String reservationDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
         String taskDetails = reservationDetails.split("/from")[0].trim();
+        if (taskDetails.isEmpty()) {
+            throw new SpongebobException("What reservation would you like to make?");
+        }
         String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
         String reservationEndTime = reservationDetails.split("/to")[1].trim();
         KrustyKrabReservation newReservation = 
@@ -131,8 +138,10 @@ public class Spongebob {
                     } catch (StringIndexOutOfBoundsException e) {
                         System.out.println("What delivery order would you like to make?");
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("By when should I deliver the order?");
-                    } 
+                        System.out.println("By when should I deliver the Krabby Patty?");
+                    } catch (SpongebobException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case ADD_RESERVATION:
                     try {
@@ -142,6 +151,8 @@ public class Spongebob {
                         System.out.println("What reservation would you like to make?");
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println("From when to when do you want to reserve the Krusty Krab?");
+                    } catch (SpongebobException e) {
+                        System.out.println(e.getMessage());
                     }
                     break;
                 case EMPTY:
