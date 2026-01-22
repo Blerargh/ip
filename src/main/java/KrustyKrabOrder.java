@@ -1,25 +1,16 @@
-public class KrustyKrabOrder {
-    private String order;
-    private boolean isCompleted;
-
+public class KrustyKrabOrder extends KrustyKrabTask{
     public KrustyKrabOrder(String order) {
-        this.order = order;
-        this.isCompleted = false;
+        super(order);
     }
 
-    public String getOrder() {
-        return this.order;
-    }
-
-    public boolean isCompleted() {
-        return this.isCompleted;
-    }
-
-    public void complete() {
-        this.isCompleted = true;
-    }
-
-    public void cancel() {
-        this.isCompleted = false;
+    @Override
+    public String toString() {
+        String str = "[O]";
+        if (this.isCompleted()) {
+            str += "[X] " + this.getTaskName();
+        } else {
+            str += "[ ] " + this.getTaskName();
+        }
+        return str;
     }
 }

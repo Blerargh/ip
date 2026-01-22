@@ -2,50 +2,45 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Spongebob {
-    private ArrayList<KrustyKrabOrder> krustyKrabOrderList = new ArrayList<>();
+    private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
 
     public void printOrders() {
         if (this.krustyKrabOrderList.isEmpty()) {
-            System.out.println("How about ordering a Krabby Patty first?");
+            System.out.println("How about making a request first?");
         } else {
             for (int i = 0; i < this.krustyKrabOrderList.size(); i++) {
-                String str = "Krabby Patty Order " + (i + 1) + ": ";
-                KrustyKrabOrder order = this.krustyKrabOrderList.get(i);
-                if (order.isCompleted()) {
-                    str += "[X] " + order.getOrder();
-                } else {
-                    str += "[ ] " + order.getOrder();
-                }
-                System.out.println(str);
+                String str = "Krabby Patty Task " + (i + 1) + ": ";
+                KrustyKrabTask order = this.krustyKrabOrderList.get(i);
+                System.out.println(str + order.toString());
             }
         }
     }
 
-    public void markOrder(int index) {
+    public void markTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
-            KrustyKrabOrder order = this.krustyKrabOrderList.get(index);
-            if (!order.isCompleted()) {
-                order.complete();
-                System.out.println("Order complete!\n[X] " + order.getOrder());
+            KrustyKrabTask task = this.krustyKrabOrderList.get(index);
+            if (!task.isCompleted()) {
+                task.complete();
+                System.out.println("Task complete!\n" + task.toString());
             } else {
-                System.out.println("This order is already completed!\n[X] " + order.getOrder());
+                System.out.println("This task is already completed!\n" + task.toString());
             }
         } else {
-            System.out.println("Did you order this?");
+            System.out.println("Did you make this request?");
         }
     }
 
-    public void unmarkOrder(int index) {
+    public void unmarkTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
-            KrustyKrabOrder order = this.krustyKrabOrderList.get(index);
-            if (order.isCompleted()) {
-                order.cancel();
-                System.out.println("Order cancelled!\n[ ] " + order.getOrder());
+            KrustyKrabTask task = this.krustyKrabOrderList.get(index);
+            if (task.isCompleted()) {
+                task.cancel();
+                System.out.println("Task cancelled!\n" + task.toString());
             } else {
-                System.out.println("This order is not completed yet!\n[ ] " + order.getOrder());
+                System.out.println("This task is not completed yet!\n" + task.toString());
             }
         } else {
-            System.out.println("Which order are you referring to?");
+            System.out.println("Which task are you referring to?");
         }
     }
 
@@ -73,8 +68,8 @@ public class Spongebob {
                     spongebob.printOrders();
                     break;
                 case ADD:
-                    spongebob.krustyKrabOrderList.add(new KrustyKrabOrder(userInput));
-                    System.out.println("Krabby Patty order received!\n[ ] " + userInput);
+                    spongebob.krustyKrabOrderList.add(new KrustyKrabTask(userInput));
+                    System.out.println("Krabby Patty task received!\n[ ] " + userInput);
                     break;
                 case BYE:
                     System.out.println("Goodbye! Have a great day under the sea!");
@@ -83,20 +78,20 @@ public class Spongebob {
                     return;
                 case MARK:
                     int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-                    spongebob.markOrder(indexToMark);
+                    spongebob.markTask(indexToMark);
                     break;
                 case UNMARK:
                     int indexToUnmark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-                    spongebob.unmarkOrder(indexToUnmark);
+                    spongebob.unmarkTask(indexToUnmark);
                     break;
                 case MARK_ERROR:
-                    System.out.println("Which order are you referring to?");
+                    System.out.println("Which task are you referring to?");
                     break;
                 case UNMARK_ERROR:
-                    System.out.println("I cannot fulfill this order cancellation request!");
+                    System.out.println("I cannot fulfill this task cancellation request!");
                     break;
                 case EMPTY:
-                    System.out.println("Did you order something?");
+                    System.out.println("Did you make this request?");
                     break;
             }
             printHorizontalLine();
