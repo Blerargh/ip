@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Spongebob {
     private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
@@ -70,8 +70,8 @@ public class Spongebob {
         }
         String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
         String reservationEndTime = reservationDetails.split("/to")[1].trim();
-        KrustyKrabReservation newReservation = 
-                new KrustyKrabReservation(taskDetails, reservationStartTime, reservationEndTime);
+        KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, reservationStartTime,
+                reservationEndTime);
         this.krustyKrabOrderList.add(newReservation);
         System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
     }
@@ -92,18 +92,18 @@ public class Spongebob {
     public static void main(String[] args) {
         // Initialise Spongebob
         Spongebob spongebob = new Spongebob();
-        
+
         // Greeting message
-        printHorizontalLine();
+        Spongebob.printHorizontalLine();
         System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
-        printHorizontalLine();
+        Spongebob.printHorizontalLine();
 
         // Parse user input
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();
             userInput = userInput.trim();
-            printHorizontalLine();
+            Spongebob.printHorizontalLine();
             Actions action = Actions.fromString(userInput);
             switch (action) {
                 case LIST:
@@ -111,7 +111,7 @@ public class Spongebob {
                     break;
                 case BYE:
                     System.out.println("Goodbye! Have a great day under the sea!");
-                    printHorizontalLine();
+                    Spongebob.printHorizontalLine();
                     scanner.close();
                     return;
                 case MARK:
@@ -174,7 +174,7 @@ public class Spongebob {
                     System.out.println("Did you make a request?");
                     break;
             }
-            printHorizontalLine();
+            Spongebob.printHorizontalLine();
         }
     }
 }

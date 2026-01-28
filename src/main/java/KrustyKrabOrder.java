@@ -1,4 +1,4 @@
-public class KrustyKrabOrder extends KrustyKrabTask{
+public class KrustyKrabOrder extends KrustyKrabTask {
     public KrustyKrabOrder(String order) {
         super(order);
     }
