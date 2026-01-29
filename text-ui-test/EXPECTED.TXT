@@ -14,27 +14,40 @@ _________________________________________________________
 _________________________________________________________
 Krabby Patty Order received!
 [O][ ] krabby patty
+Tasks saved successfully.
+_________________________________________________________
+_________________________________________________________
+Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.
 _________________________________________________________
 _________________________________________________________
 Krabby Patty Delivery scheduled!
-[D][ ] patrick (by: 4pm)
+[D][ ] patrick (by: Dec 12 2001 18:00)
+Tasks saved successfully.
+_________________________________________________________
+_________________________________________________________
+Please enter the reservation time in the format dd-MM-yyyy HH:mm.
+_________________________________________________________
+_________________________________________________________
+What do you mean your reservation ends before it starts?
 _________________________________________________________
 _________________________________________________________
 Krusty Krab Reservation made!
-[R][ ] squidward dinner (from: 1am to: 3am)
+[R][ ] squidward dinner (from: Dec 12 2010 18:00 to: Dec 12 2010 18:50)
+Tasks saved successfully.
 _________________________________________________________
 _________________________________________________________
 Krabby Patty Task 1: [O][ ] krabby patty
-Krabby Patty Task 2: [D][ ] patrick (by: 4pm)
-Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 2: [D][ ] patrick (by: Dec 12 2001 18:00)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: Dec 12 2010 18:00 to: Dec 12 2010 18:50)
 _________________________________________________________
 _________________________________________________________
 Task complete!
-[D][X] patrick (by: 4pm)
+[D][X] patrick (by: Dec 12 2001 18:00)
+Tasks saved successfully.
 _________________________________________________________
 _________________________________________________________
 This task is already completed!
-[D][X] patrick (by: 4pm)
+[D][X] patrick (by: Dec 12 2001 18:00)
 _________________________________________________________
 _________________________________________________________
 Which task are you referring to?
@@ -44,12 +57,13 @@ Which task are you referring to?
 _________________________________________________________
 _________________________________________________________
 Krabby Patty Task 1: [O][ ] krabby patty
-Krabby Patty Task 2: [D][X] patrick (by: 4pm)
-Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 2: [D][X] patrick (by: Dec 12 2001 18:00)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: Dec 12 2010 18:00 to: Dec 12 2010 18:50)
 _________________________________________________________
 _________________________________________________________
 Task cancelled!
-[D][ ] patrick (by: 4pm)
+[D][ ] patrick (by: Dec 12 2001 18:00)
+Tasks saved successfully.
 _________________________________________________________
 _________________________________________________________
 Which task are you referring to?
@@ -59,8 +73,8 @@ Which task are you referring to?
 _________________________________________________________
 _________________________________________________________
 Krabby Patty Task 1: [O][ ] krabby patty
-Krabby Patty Task 2: [D][ ] patrick (by: 4pm)
-Krabby Patty Task 3: [R][ ] squidward dinner (from: 1am to: 3am)
+Krabby Patty Task 2: [D][ ] patrick (by: Dec 12 2001 18:00)
+Krabby Patty Task 3: [R][ ] squidward dinner (from: Dec 12 2010 18:00 to: Dec 12 2010 18:50)
 _________________________________________________________
 _________________________________________________________
 What Krabby Patty order would you like to make?
@@ -98,7 +112,8 @@ From when to when do you want to reserve the Krusty Krab?
 _________________________________________________________
 _________________________________________________________
 Task removed!
-[D][ ] patrick (by: 4pm)
+[D][ ] patrick (by: Dec 12 2001 18:00)
+Tasks saved successfully.
 _________________________________________________________
 _________________________________________________________
 Which task are you referring to?

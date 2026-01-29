@@ -1,10 +1,13 @@
 package spongebob;
 
-public class KrustyKrabReservation extends KrustyKrabTask {
-    private String startTime;
-    private String endTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public KrustyKrabReservation(String reservation, String startTime, String endTime) {
+public class KrustyKrabReservation extends KrustyKrabTask {
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    public KrustyKrabReservation(String reservation, LocalDateTime startTime, LocalDateTime endTime) {
         super(reservation);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -18,7 +21,10 @@ public class KrustyKrabReservation extends KrustyKrabTask {
         } else {
             str += "[ ] " + this.getTaskName();
         }
-        str += " (from: " + this.startTime + " to: " + this.endTime + ")";
+
+        String formattedStartTime = this.startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        String formattedEndTime = this.endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        str += " (from: " + formattedStartTime + " to: " + formattedEndTime + ")";
         return str;
     }
 }

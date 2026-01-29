@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,6 +72,7 @@ public class Spongebob {
     }
 
     public void addOrder(String orderDetails) {
+        // Retrieve order details
         String taskDetails = orderDetails.trim();
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
         this.krustyKrabOrderList.add(newOrder);
@@ -77,30 +81,54 @@ public class Spongebob {
     }
 
     public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
+        // Retrieve delivery details
         String taskDetails = deliveryDetails.split("/by")[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What delivery order would you like to make?");
         }
-
         String deliveryDeadline = deliveryDetails.split("/by")[1].trim();
-        KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliveryDeadline);
-        this.krustyKrabOrderList.add(newDelivery);
-        System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
-        this.saveTasks();
+
+        // Check for valid date time format
+        try {
+            LocalDateTime deliverBy = LocalDateTime.parse(deliveryDeadline,
+                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+            KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliverBy);
+            this.krustyKrabOrderList.add(newDelivery);
+            System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
+            this.saveTasks();
+        } catch (DateTimeParseException e) {
+            throw new SpongebobException("Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.");
+        }
+
     }
 
     public void addReservation(String reservationDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
+        // Retrieve reservation details
         String taskDetails = reservationDetails.split("/from")[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What reservation would you like to make?");
         }
         String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
         String reservationEndTime = reservationDetails.split("/to")[1].trim();
-        KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, reservationStartTime,
-                reservationEndTime);
-        this.krustyKrabOrderList.add(newReservation);
-        System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
-        this.saveTasks();
+
+        // Check for valid date time format
+        try {
+            LocalDateTime startTime = LocalDateTime.parse(reservationStartTime,
+                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+            LocalDateTime endTime = LocalDateTime.parse(reservationEndTime,
+                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+            if (endTime.isBefore(startTime)) {
+                throw new SpongebobException("What do you mean your reservation ends before it starts?");
+            }
+
+            // If valid, add reservation to list
+            KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, startTime, endTime);
+            this.krustyKrabOrderList.add(newReservation);
+            System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
+            this.saveTasks();
+        } catch (DateTimeParseException e) {
+            throw new SpongebobException("Please enter the reservation time in the format dd-MM-yyyy HH:mm.");
+        }
     }
 
     public void deleteTask(int index) {
@@ -118,12 +146,15 @@ public class Spongebob {
     }
 
     public static void main(String[] args) {
+        // Initialisation
         Spongebob spongebob = new Spongebob();
 
+        // Greeting message
         Spongebob.printHorizontalLine();
         System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
         Spongebob.printHorizontalLine();
 
+        // Main loop to process user input
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();

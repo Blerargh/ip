@@ -1,9 +1,12 @@
 package spongebob;
 
-public class KrustyKrabDelivery extends KrustyKrabTask {
-    String deliveryDeadline;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public KrustyKrabDelivery(String delivery, String deliveryDeadline) {
+public class KrustyKrabDelivery extends KrustyKrabTask {
+    LocalDateTime deliveryDeadline;
+
+    public KrustyKrabDelivery(String delivery, LocalDateTime deliveryDeadline) {
         super(delivery);
         this.deliveryDeadline = deliveryDeadline;
     }
@@ -16,7 +19,8 @@ public class KrustyKrabDelivery extends KrustyKrabTask {
         } else {
             str += "[ ] " + this.getTaskName();
         }
-        str += " (by: " + this.deliveryDeadline + ")";
+        String formattedDeadline = this.deliveryDeadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        str += " (by: " + formattedDeadline + ")";
         return str;
     }
 }
