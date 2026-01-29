@@ -1,3 +1,5 @@
+package spongebob;
+
 public enum Actions {
     EMPTY,
     LIST,
