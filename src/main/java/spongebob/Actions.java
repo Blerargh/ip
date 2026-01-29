@@ -1,14 +1,16 @@
+package spongebob;
+
 public enum Actions {
-    EMPTY, 
-    LIST, 
-    MARK, 
-    UNMARK, 
-    BYE, 
-    ERROR, 
-    MARK_ERROR, 
-    UNMARK_ERROR, 
-    ADD_ORDER, 
-    ADD_DELIVERY, 
+    EMPTY,
+    LIST,
+    MARK,
+    UNMARK,
+    BYE,
+    ERROR,
+    MARK_ERROR,
+    UNMARK_ERROR,
+    ADD_ORDER,
+    ADD_DELIVERY,
     ADD_RESERVATION,
     DELETE,
     DELETE_ERROR;

@@ -1,10 +1,17 @@
-import java.util.Scanner;
+package spongebob;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Spongebob {
     private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
 
-    public void printOrders() {
+    public void printTasks() {
         if (this.krustyKrabOrderList.isEmpty()) {
             System.out.println("How about making a request first?");
         } else {
@@ -16,12 +23,28 @@ public class Spongebob {
         }
     }
 
+    public void saveTasks() {
+        Path path = Paths.get("src/main/java/data");
+        try {
+            Files.createDirectories(path);
+            FileWriter fileWriter = new FileWriter("src/main/java/data/orders.txt");
+            for (KrustyKrabTask task : this.krustyKrabOrderList) {
+                fileWriter.write(task.toString() + "\n");
+            }
+            fileWriter.close();
+            System.out.println("Tasks saved successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving tasks.");
+        }
+    }
+
     public void markTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (!task.isCompleted()) {
                 task.complete();
                 System.out.println("Task complete!\n" + task.toString());
+                this.saveTasks();
             } else {
                 System.out.println("This task is already completed!\n" + task.toString());
             }
@@ -36,6 +59,7 @@ public class Spongebob {
             if (task.isCompleted()) {
                 task.cancel();
                 System.out.println("Task cancelled!\n" + task.toString());
+                this.saveTasks();
             } else {
                 System.out.println("This task is not completed yet!\n" + task.toString());
             }
@@ -49,6 +73,7 @@ public class Spongebob {
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
         this.krustyKrabOrderList.add(newOrder);
         System.out.println("Krabby Patty Order received!\n" + newOrder.toString());
+        this.saveTasks();
     }
 
     public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
@@ -61,6 +86,7 @@ public class Spongebob {
         KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliveryDeadline);
         this.krustyKrabOrderList.add(newDelivery);
         System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
+        this.saveTasks();
     }
 
     public void addReservation(String reservationDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
@@ -70,16 +96,18 @@ public class Spongebob {
         }
         String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
         String reservationEndTime = reservationDetails.split("/to")[1].trim();
-        KrustyKrabReservation newReservation = 
-                new KrustyKrabReservation(taskDetails, reservationStartTime, reservationEndTime);
+        KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, reservationStartTime,
+                reservationEndTime);
         this.krustyKrabOrderList.add(newReservation);
         System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
+        this.saveTasks();
     }
 
     public void deleteTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
             System.out.println("Task removed!\n" + task.toString());
+            this.saveTasks();
         } else {
             System.out.println("Which task are you referring to?");
         }
@@ -90,28 +118,25 @@ public class Spongebob {
     }
 
     public static void main(String[] args) {
-        // Initialise Spongebob
         Spongebob spongebob = new Spongebob();
-        
-        // Greeting message
-        printHorizontalLine();
-        System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
-        printHorizontalLine();
 
-        // Parse user input
+        Spongebob.printHorizontalLine();
+        System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
+        Spongebob.printHorizontalLine();
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();
             userInput = userInput.trim();
-            printHorizontalLine();
+            Spongebob.printHorizontalLine();
             Actions action = Actions.fromString(userInput);
             switch (action) {
                 case LIST:
-                    spongebob.printOrders();
+                    spongebob.printTasks();
                     break;
                 case BYE:
                     System.out.println("Goodbye! Have a great day under the sea!");
-                    printHorizontalLine();
+                    Spongebob.printHorizontalLine();
                     scanner.close();
                     return;
                 case MARK:
@@ -174,7 +199,7 @@ public class Spongebob {
                     System.out.println("Did you make a request?");
                     break;
             }
-            printHorizontalLine();
+            Spongebob.printHorizontalLine();
         }
     }
 }

@@ -1,3 +1,5 @@
+package spongebob;
+
 public class KrustyKrabReservation extends KrustyKrabTask {
     private String startTime;
     private String endTime;

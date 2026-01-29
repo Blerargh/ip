@@ -1,3 +1,5 @@
+package spongebob;
+
 public class KrustyKrabDelivery extends KrustyKrabTask {
     String deliveryDeadline;
 

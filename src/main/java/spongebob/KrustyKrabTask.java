@@ -1,3 +1,5 @@
+package spongebob;
+
 public class KrustyKrabTask {
     private String taskName;
     private boolean isCompleted;
