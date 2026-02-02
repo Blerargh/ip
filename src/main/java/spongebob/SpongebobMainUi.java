@@ -2,7 +2,7 @@ package spongebob;
 
 import java.util.Scanner;
 
-public class Spongebob {
+public class SpongebobMainUi {
     public static void printHorizontalLine() {
         System.out.println("_________________________________________________________");
     }
@@ -12,16 +12,16 @@ public class Spongebob {
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
 
         // Greeting message
-        Spongebob.printHorizontalLine();
+        SpongebobMainUi.printHorizontalLine();
         System.out.println("Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
-        Spongebob.printHorizontalLine();
+        SpongebobMainUi.printHorizontalLine();
 
         // Main loop to process user input
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userInput = scanner.nextLine();
             userInput = userInput.trim();
-            Spongebob.printHorizontalLine();
+            SpongebobMainUi.printHorizontalLine();
             Actions action = Actions.fromString(userInput);
             switch (action) {
                 case LIST:
@@ -29,7 +29,7 @@ public class Spongebob {
                     break;
                 case BYE:
                     System.out.println("Goodbye! Have a great day under the sea!");
-                    Spongebob.printHorizontalLine();
+                    SpongebobMainUi.printHorizontalLine();
                     scanner.close();
                     return;
                 case MARK:
@@ -92,7 +92,7 @@ public class Spongebob {
                     System.out.println("Did you make a request?");
                     break;
             }
-            Spongebob.printHorizontalLine();
+            SpongebobMainUi.printHorizontalLine();
         }
     }
 }
