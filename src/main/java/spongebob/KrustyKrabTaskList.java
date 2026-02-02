@@ -1,10 +1,5 @@
 package spongebob;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,28 +20,13 @@ public class KrustyKrabTaskList {
         }
     }
 
-    public void saveTasks() {
-        Path path = Paths.get("src/main/java/data");
-        try {
-            Files.createDirectories(path);
-            FileWriter fileWriter = new FileWriter("src/main/java/data/orders.txt");
-            for (KrustyKrabTask task : this.krustyKrabOrderList) {
-                fileWriter.write(task.toString() + "\n");
-            }
-            fileWriter.close();
-            System.out.println("Tasks saved successfully.");
-        } catch (IOException e) {
-            System.out.println("An error occurred while saving tasks.");
-        }
-    }
-
     public void addOrder(String orderDetails) {
         // Retrieve order details
         String taskDetails = orderDetails.trim();
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
         this.krustyKrabOrderList.add(newOrder);
         System.out.println("Krabby Patty Order received!\n" + newOrder.toString());
-        this.saveTasks();
+        KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
     }
 
     public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
@@ -64,7 +44,7 @@ public class KrustyKrabTaskList {
             KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliverBy);
             this.krustyKrabOrderList.add(newDelivery);
             System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
-            this.saveTasks();
+            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
         } catch (DateTimeParseException e) {
             throw new SpongebobException("Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.");
         }
@@ -94,7 +74,7 @@ public class KrustyKrabTaskList {
             KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, startTime, endTime);
             this.krustyKrabOrderList.add(newReservation);
             System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
-            this.saveTasks();
+            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
         } catch (DateTimeParseException e) {
             throw new SpongebobException("Please enter the reservation time in the format dd-MM-yyyy HH:mm.");
         }
@@ -104,7 +84,7 @@ public class KrustyKrabTaskList {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
             System.out.println("Task removed!\n" + task.toString());
-            this.saveTasks();
+            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
         } else {
             System.out.println("Which task are you referring to?");
         }
@@ -116,7 +96,7 @@ public class KrustyKrabTaskList {
             if (!task.isCompleted()) {
                 task.complete();
                 System.out.println("Task complete!\n" + task.toString());
-                this.saveTasks();
+                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             } else {
                 System.out.println("This task is already completed!\n" + task.toString());
             }
@@ -131,12 +111,16 @@ public class KrustyKrabTaskList {
             if (task.isCompleted()) {
                 task.cancel();
                 System.out.println("Task cancelled!\n" + task.toString());
-                this.saveTasks();
+                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             } else {
                 System.out.println("This task is not completed yet!\n" + task.toString());
             }
         } else {
             System.out.println("Which task are you referring to?");
         }
+    }
+
+    public ArrayList<KrustyKrabTask> getTasks() {
+        return this.krustyKrabOrderList;
     }
 }

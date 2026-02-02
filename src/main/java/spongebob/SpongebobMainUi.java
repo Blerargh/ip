@@ -21,10 +21,12 @@ public class SpongebobMainUi {
         while (true) {
             String userInput = scanner.nextLine();
             userInput = userInput.trim();
+
             SpongebobMainUi.printHorizontalLine();
             ActionParser action = ActionParser.fromString(userInput);
             ActionParser.executeAction(action, taskList, userInput);
             SpongebobMainUi.printHorizontalLine();
+
             if (action.equals(ActionParser.BYE)) {
                 break;
             }
