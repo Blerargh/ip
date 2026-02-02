@@ -119,8 +119,4 @@ public class KrustyKrabTaskList {
             System.out.println("Which task are you referring to?");
         }
     }
-
-    public ArrayList<KrustyKrabTask> getTasks() {
-        return this.krustyKrabOrderList;
-    }
 }
