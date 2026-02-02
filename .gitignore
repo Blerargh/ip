@@ -19,8 +19,9 @@ text-ui-test/EXPECTED-UNIX.TXT
 # Ignore .class files
 *.class
 
-# Ignore VSCode settings folder
+# Ignore settings folders
 .vscode
+.settings
 
 # Ignore saved outputs
 /src/main/java/data
