@@ -72,7 +72,6 @@ public enum ActionParser {
             taskList.printTasks();
             break;
         case BYE:
-            System.out.println("Goodbye! Have a great day under the sea!");
             break;
         case MARK:
             int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
