@@ -22,8 +22,8 @@ public class KrustyKrabReservation extends KrustyKrabTask {
             str += "[ ] " + this.getTaskName();
         }
 
-        String formattedStartTime = this.startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
-        String formattedEndTime = this.endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        String formattedStartTime = this.startTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        String formattedEndTime = this.endTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
         str += " (from: " + formattedStartTime + " to: " + formattedEndTime + ")";
         return str;
     }

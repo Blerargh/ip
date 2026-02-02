@@ -9,7 +9,7 @@ public class SpongebobMainUi {
 
     public static void main(String[] args) {
         // Initialisation
-        KrustyKrabTaskList taskList = new KrustyKrabTaskList();
+        KrustyKrabTaskList taskList = KrustyKrabTaskStorage.loadTasks();
 
         // Greeting message
         SpongebobMainUi.printHorizontalLine();

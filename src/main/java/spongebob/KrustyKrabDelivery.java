@@ -19,7 +19,7 @@ public class KrustyKrabDelivery extends KrustyKrabTask {
         } else {
             str += "[ ] " + this.getTaskName();
         }
-        String formattedDeadline = this.deliveryDeadline.format(DateTimeFormatter.ofPattern("MMM d yyyy HH:mm"));
+        String formattedDeadline = this.deliveryDeadline.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
         str += " (by: " + formattedDeadline + ")";
         return str;
     }
