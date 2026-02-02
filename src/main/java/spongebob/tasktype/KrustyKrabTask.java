@@ -1,4 +1,4 @@
-package spongebob;
+package spongebob.tasktype;
 
 public class KrustyKrabTask {
     private String taskName;

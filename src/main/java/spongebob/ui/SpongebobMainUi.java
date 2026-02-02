@@ -1,6 +1,10 @@
-package spongebob;
+package spongebob.ui;
 
 import java.util.Scanner;
+
+import spongebob.parser.ActionParser;
+import spongebob.tasklistmanager.KrustyKrabTaskList;
+import spongebob.tasklistmanager.KrustyKrabTaskStorage;
 
 public class SpongebobMainUi {
     public static void printHorizontalLine() {

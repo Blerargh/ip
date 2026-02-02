@@ -1,4 +1,7 @@
-package spongebob;
+package spongebob.parser;
+
+import spongebob.exceptions.SpongebobException;
+import spongebob.tasklistmanager.KrustyKrabTaskList;
 
 public enum ActionParser {
     EMPTY,

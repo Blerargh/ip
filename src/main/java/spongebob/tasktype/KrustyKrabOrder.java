@@ -1,4 +1,4 @@
-package spongebob;
+package spongebob.tasktype;
 
 public class KrustyKrabOrder extends KrustyKrabTask {
     public KrustyKrabOrder(String order) {
