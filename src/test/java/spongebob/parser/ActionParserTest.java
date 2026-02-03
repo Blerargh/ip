@@ -38,6 +38,12 @@ public class ActionParserTest {
         testInput = "delete 1";
         Assertions.assertEquals(ActionParser.DELETE, ActionParser.fromString(testInput));
 
+        testInput = "find Patrick";
+        Assertions.assertEquals(ActionParser.FIND, ActionParser.fromString(testInput));
+
+        testInput = "find";
+        Assertions.assertEquals(ActionParser.FIND, ActionParser.fromString(testInput));
+
         testInput = "";
         Assertions.assertEquals(ActionParser.EMPTY, ActionParser.fromString(testInput));
     }
