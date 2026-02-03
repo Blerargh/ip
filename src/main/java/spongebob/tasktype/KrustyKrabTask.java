@@ -17,11 +17,11 @@ public class KrustyKrabTask {
         return this.isCompleted;
     }
 
-    public void complete() {
+    public void markComplete() {
         this.isCompleted = true;
     }
 
-    public void cancel() {
+    public void markIncomplete() {
         this.isCompleted = false;
     }
 

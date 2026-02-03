@@ -100,7 +100,7 @@ public class KrustyKrabTaskList {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (!task.isCompleted()) {
-                task.complete();
+                task.markComplete();
                 System.out.println("Task complete!\n" + task.toString());
                 KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             } else {
@@ -115,7 +115,7 @@ public class KrustyKrabTaskList {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (task.isCompleted()) {
-                task.cancel();
+                task.markIncomplete();
                 System.out.println("Task cancelled!\n" + task.toString());
                 KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             } else {
