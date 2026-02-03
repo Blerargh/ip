@@ -1,5 +1,9 @@
 package spongebob.ui;
 
+/**
+ * Handles the graphical and formatted display of the user's interaction with
+ * Spongebob
+ */
 public class SpongebobMainUi {
     public void printHorizontalLine() {
         System.out.println("_________________________________________________________");
