@@ -25,6 +25,10 @@ public class KrustyKrabTask {
         this.isCompleted = false;
     }
 
+    public boolean matchesKeyword(String keyword) {
+        return this.taskName.toLowerCase().contains(keyword.toLowerCase());
+    }
+
     @Override
     public String toString() {
         String str = "";

@@ -125,4 +125,20 @@ public class KrustyKrabTaskList {
             System.out.println("Which task are you referring to?");
         }
     }
+
+    public void findTasks(String keyword) {
+        System.out.println("Here are the matching tasks in your Krusty Krab task list:");
+
+        boolean anyFound = false;
+        for (KrustyKrabTask task : this.krustyKrabOrderList) {
+            if (task.matchesKeyword(keyword)) {
+                anyFound = true;
+                System.out.println(task.toString());
+            }
+        }
+
+        if (!anyFound) {
+            System.out.println("...No matching tasks found, are you sure you made such a request?");
+        }
+    }
 }

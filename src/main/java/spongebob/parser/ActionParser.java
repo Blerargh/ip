@@ -16,7 +16,8 @@ public enum ActionParser {
     ADD_DELIVERY,
     ADD_RESERVATION,
     DELETE,
-    DELETE_ERROR;
+    DELETE_ERROR,
+    FIND;
 
     public static ActionParser fromString(String actionStr) {
         String[] words = actionStr.split(" ");
@@ -59,6 +60,8 @@ public enum ActionParser {
                 return DELETE;
             }
             return DELETE_ERROR;
+        case "find":
+            return FIND;
         case "":
             return EMPTY;
         default:
@@ -125,6 +128,18 @@ public enum ActionParser {
             break;
         case DELETE_ERROR:
             System.out.println("Which task are you referring to?");
+            break;
+        case FIND:
+            try {
+                String keyword = userInput.substring(5).trim();
+                if (keyword.isEmpty()) {
+                    System.out.println("Please enter valid keyword(s) to search for!");
+                } else {
+                    taskList.findTasks(keyword);
+                }
+            } catch (StringIndexOutOfBoundsException e) {
+                System.out.println("Please enter valid keyword(s) to search for!");
+            }
             break;
         case ERROR:
             System.out.println("What are you saying, Mr. Krabs?");
