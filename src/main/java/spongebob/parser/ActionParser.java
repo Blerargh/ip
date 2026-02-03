@@ -3,6 +3,9 @@ package spongebob.parser;
 import spongebob.exceptions.SpongebobException;
 import spongebob.tasklistmanager.KrustyKrabTaskList;
 
+/**
+ * Parses user actions and executes corresponding methods in KrustyKrabTaskList.
+ */
 public enum ActionParser {
     EMPTY,
     LIST,
@@ -18,8 +21,14 @@ public enum ActionParser {
     DELETE,
     DELETE_ERROR;
 
-    public static ActionParser fromString(String actionStr) {
-        String[] words = actionStr.split(" ");
+    /**
+     * Extracts the corresponding ActionParser enum from the user input.
+     * 
+     * @param userInput The user input string.
+     * @return The corresponding ActionParser enum.
+     */
+    public static ActionParser fromString(String userInput) {
+        String[] words = userInput.split(" ");
         String firstWord = words[0].toLowerCase();
         switch (firstWord) {
         case "list":
@@ -66,6 +75,16 @@ public enum ActionParser {
         }
     }
 
+    /**
+     * Executes the action corresponding to the ActionParser enum on the given
+     * KrustyKrabTaskList and original user input.
+     * 
+     * @param action    The ActionParser enum representing the action to be
+     *                  executed.
+     * @param taskList  The KrustyKrabTaskList on which the action is to be
+     *                  executed.
+     * @param userInput The original user input string.
+     */
     public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput) {
         switch (action) {
         case LIST:
