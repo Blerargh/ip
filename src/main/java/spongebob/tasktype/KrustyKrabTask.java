@@ -1,5 +1,10 @@
 package spongebob.tasktype;
 
+/**
+ * Represents the general task at the Krusty Krab.
+ * This is the parent class for specific task types like Order, Delivery, and
+ * Reservation.
+ */
 public class KrustyKrabTask {
     private String taskName;
     private boolean isCompleted;

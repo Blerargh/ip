@@ -3,6 +3,9 @@ package spongebob.tasktype;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a reservation task at the Krusty Krab.
+ */
 public class KrustyKrabReservation extends KrustyKrabTask {
     private LocalDateTime startTime;
     private LocalDateTime endTime;

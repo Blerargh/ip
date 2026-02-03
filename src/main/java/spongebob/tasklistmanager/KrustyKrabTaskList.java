@@ -11,9 +11,18 @@ import spongebob.tasktype.KrustyKrabOrder;
 import spongebob.tasktype.KrustyKrabReservation;
 import spongebob.tasktype.KrustyKrabTask;
 
+/**
+ * Manages the list of Krusty Krab tasks including orders, deliveries, and
+ * reservations.
+ * Manages the addition, deletion, marking, and unmarking of tasks.
+ * Interacts with KrustyKrabTaskStorage for saving and loading tasks.
+ */
 public class KrustyKrabTaskList {
     private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
 
+    /**
+     * Prints the list of Krusty Krab tasks to the console.
+     */
     public void printTasks() {
         if (this.krustyKrabOrderList.isEmpty()) {
             System.out.println("How about making a request first?");
@@ -26,6 +35,11 @@ public class KrustyKrabTaskList {
         }
     }
 
+    /**
+     * Adds a new Krusty Krab order to the task list.
+     * 
+     * @param orderDetails Details of the order to be added.
+     */
     public void addOrder(String orderDetails) {
         // Retrieve order details
         String taskDetails = orderDetails.trim();
@@ -35,6 +49,15 @@ public class KrustyKrabTaskList {
         KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
     }
 
+    /**
+     * Adds a new Krusty Krab delivery to the task list.
+     * 
+     * @param deliveryDetails Details of the delivery to be added.
+     * @throws SpongebobException             If there is an error with the delivery
+     *                                        details.
+     * @throws ArrayIndexOutOfBoundsException If the delivery details are not in the
+     *                                        expected format.
+     */
     public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
         // Retrieve delivery details
         String taskDetails = deliveryDetails.split("/by")[0].trim();
@@ -57,6 +80,15 @@ public class KrustyKrabTaskList {
 
     }
 
+    /**
+     * Adds a new Krusty Krab reservation to the task list.
+     * 
+     * @param reservationDetails Details of the reservation to be added.
+     * @throws SpongebobException             If there is an error with the
+     *                                        reservation details.
+     * @throws ArrayIndexOutOfBoundsException If the reservation details are not
+     *                                        inthe expected format.
+     */
     public void addReservation(String reservationDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
         // Retrieve reservation details
         String taskDetails = reservationDetails.split("/from")[0].trim();
@@ -86,6 +118,11 @@ public class KrustyKrabTaskList {
         }
     }
 
+    /**
+     * Deletes a Krusty Krab task from the task list based on the provided index.
+     * 
+     * @param index The index of the task to be deleted.
+     */
     public void deleteTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
@@ -96,6 +133,11 @@ public class KrustyKrabTaskList {
         }
     }
 
+    /**
+     * Marks a Krusty Krab task as completed based on the provided index.
+     * 
+     * @param index The index of the task to be marked as completed.
+     */
     public void markTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
@@ -111,6 +153,11 @@ public class KrustyKrabTaskList {
         }
     }
 
+    /**
+     * Unmarks a Krusty Krab task as completed based on the provided index.
+     * 
+     * @param index The index of the task to be unmarked as completed.
+     */
     public void unmarkTask(int index) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);

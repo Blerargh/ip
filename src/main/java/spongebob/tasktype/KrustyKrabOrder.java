@@ -1,5 +1,8 @@
 package spongebob.tasktype;
 
+/**
+ * Represents an order task at the Krusty Krab.
+ */
 public class KrustyKrabOrder extends KrustyKrabTask {
     public KrustyKrabOrder(String order) {
         super(order);

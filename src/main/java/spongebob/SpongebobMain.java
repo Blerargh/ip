@@ -7,6 +7,9 @@ import spongebob.tasklistmanager.KrustyKrabTaskList;
 import spongebob.tasklistmanager.KrustyKrabTaskStorage;
 import spongebob.ui.SpongebobMainUi;
 
+/**
+ * The main class that runs the Spongebob application.
+ */
 public class SpongebobMain {
     private SpongebobMainUi ui = new SpongebobMainUi();
 

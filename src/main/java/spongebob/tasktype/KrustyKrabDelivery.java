@@ -3,6 +3,9 @@ package spongebob.tasktype;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a delivery task at the Krusty Krab.
+ */
 public class KrustyKrabDelivery extends KrustyKrabTask {
     LocalDateTime deliveryDeadline;
 

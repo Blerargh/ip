@@ -10,7 +10,18 @@ import java.util.ArrayList;
 import spongebob.parser.ActionParser;
 import spongebob.tasktype.KrustyKrabTask;
 
+/**
+ * Handles the storage and retrieval of Krusty Krab tasks to and from a file.
+ * Tasks are saved in "src/main/java/data/orders.txt".
+ * Each task is stored in a specific format to allow for easy reconstruction.
+ */
 public class KrustyKrabTaskStorage {
+    /**
+     * Saves the list of tasks to a file.
+     * If the file does not exist, it will be created in "src/main/java/data".
+     * 
+     * @param taskList The list of tasks to be saved.
+     */
     public static void saveTasks(ArrayList<KrustyKrabTask> taskList) {
         Path path = Paths.get("src/main/java/data");
         try {
@@ -26,6 +37,13 @@ public class KrustyKrabTaskStorage {
         }
     }
 
+    /**
+     * Loads tasks from the file and reconstructs the task list.
+     * If the file does not exist in "src/main/java/data", an empty task list is
+     * returned.
+     * 
+     * @return The reconstructed KrustyKrabTaskList.
+     */
     public static KrustyKrabTaskList loadTasks() {
         Path filePath = Paths.get("src/main/java/data/orders.txt");
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
