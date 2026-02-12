@@ -4,15 +4,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import spongebob.exceptions.SpongebobException;
+import spongebob.ui.components.MainWindow;
 
 public class KrustyKrabTaskListTest {
+    private MainWindow dummyWindow = new MainWindow();
+
     @Test
     public void addDelivery_invalidDateFormat_throwsSpongebobException() {
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
         String invalidDeliveryDetails = "Deliver Krabby Patties /by 2024/12/31 18:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addDelivery(invalidDeliveryDetails);
+            taskList.addDelivery(invalidDeliveryDetails, this.dummyWindow);
         });
 
         String expectedMessage = "Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.";
@@ -27,7 +30,7 @@ public class KrustyKrabTaskListTest {
         String missingDetails = "  /by 31-12-2024 18:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addDelivery(missingDetails);
+            taskList.addDelivery(missingDetails, this.dummyWindow);
         });
 
         String expectedMessage = "What delivery order would you like to make?";
@@ -42,7 +45,7 @@ public class KrustyKrabTaskListTest {
         String invalidReservationDetails = "Reserve Patrick's birthday /from 2019/12/31 18:00 /to 2099/12/31 20:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addReservation(invalidReservationDetails);
+            taskList.addReservation(invalidReservationDetails, this.dummyWindow);
         });
 
         String expectedMessage = "Please enter the reservation time in the format dd-MM-yyyy HH:mm.";
@@ -57,7 +60,7 @@ public class KrustyKrabTaskListTest {
         String missingDetails = "  /from 31-12-2024 18:00 /to 31-12-2990 20:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addReservation(missingDetails);
+            taskList.addReservation(missingDetails, this.dummyWindow);
         });
 
         String expectedMessage = "What reservation would you like to make?";

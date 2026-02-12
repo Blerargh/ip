@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import spongebob.parser.ActionParser;
+import spongebob.exceptions.SpongebobException;
+import spongebob.tasktype.KrustyKrabDelivery;
+import spongebob.tasktype.KrustyKrabOrder;
+import spongebob.tasktype.KrustyKrabReservation;
 import spongebob.tasktype.KrustyKrabTask;
 
 /**
@@ -22,7 +26,7 @@ public class KrustyKrabTaskStorage {
      * 
      * @param taskList The list of tasks to be saved.
      */
-    public static void saveTasks(ArrayList<KrustyKrabTask> taskList) {
+    public static void saveTasks(ArrayList<KrustyKrabTask> taskList) throws SpongebobException {
         Path path = Paths.get("src/main/java/data");
         try {
             Files.createDirectories(path);
@@ -31,9 +35,8 @@ public class KrustyKrabTaskStorage {
                 fileWriter.write(task.toString() + "\n");
             }
             fileWriter.close();
-            System.out.println("Tasks saved successfully.");
         } catch (IOException e) {
-            System.out.println("An error occurred while saving tasks.");
+            throw new SpongebobException("An error occurred while saving tasks.");
         }
     }
 
@@ -44,7 +47,7 @@ public class KrustyKrabTaskStorage {
      * 
      * @return The reconstructed KrustyKrabTaskList.
      */
-    public static KrustyKrabTaskList loadTasks() {
+    public KrustyKrabTaskList loadTasks() throws SpongebobException {
         Path filePath = Paths.get("src/main/java/data/orders.txt");
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
 
@@ -57,43 +60,45 @@ public class KrustyKrabTaskStorage {
                     boolean isDone = line.charAt(4) == 'X';
 
                     // Reconstruct task list based on saved data
+                    KrustyKrabTask loadedTask;
                     switch (taskType) {
-                    case 'O':
-                        String details = line.substring(7);
-                        ActionParser.executeAction(ActionParser.ADD_ORDER,
-                                taskList, String.format("order %s", details));
-                        break;
                     case 'D':
                         String deliveryDetails = line.substring(7, line.indexOf("(by:") - 1);
-                        String deliveryBy = line.substring(line.indexOf("(by:") + 5, line.length() - 1);
+                        LocalDateTime deliveryBy = LocalDateTime
+                                .parse(line.substring(line.indexOf("(by:") + 5, line.length() - 1),
+                                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
 
-                        ActionParser.executeAction(ActionParser.ADD_DELIVERY,
-                                taskList, String.format("delivery %s /by %s", deliveryDetails, deliveryBy));
+                        loadedTask = new KrustyKrabDelivery(deliveryDetails, deliveryBy);
                         break;
                     case 'R':
                         String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
-                        String reservationFrom = line.substring(line.indexOf("(from:") + 7,
-                                line.indexOf("to:") - 1);
-                        String reservationTo = line.substring(line.indexOf("to:") + 4, line.length() - 1);
+                        LocalDateTime reservationFrom = LocalDateTime.parse(line.substring(line.indexOf("(from:") + 7,
+                                line.indexOf("to:") - 1),
+                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
+                        LocalDateTime reservationTo = LocalDateTime.parse(
+                                line.substring(line.indexOf("to:") + 4, line.length() - 1),
+                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
 
-                        ActionParser.executeAction(ActionParser.ADD_RESERVATION,
-                                taskList, String.format("reservation %s /from %s /to %s",
-                                        reservationDetails, reservationFrom, reservationTo));
+                        loadedTask = new KrustyKrabReservation(reservationDetails, reservationFrom,
+                                reservationTo);
+                        break;
+                    default:
+                        String details = line.substring(7);
+                        loadedTask = new KrustyKrabOrder(details);
                         break;
                     }
 
                     // Mark task as done if applicable
                     if (isDone) {
-                        ActionParser.executeAction(ActionParser.MARK,
-                                taskList, String.format("mark %d", i + 1));
+                        loadedTask.markComplete();
                     }
+                    taskList.addTask(loadedTask);
                 }
-                System.out.println("Tasks loaded successfully.");
             } else {
-                System.out.println("No saved tasks found.");
+                throw new SpongebobException("No saved tasks found.");
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while loading tasks.");
+            throw new SpongebobException("An error occurred while loading tasks.");
         }
 
         return taskList;
