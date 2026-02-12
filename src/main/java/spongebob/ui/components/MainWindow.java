@@ -36,6 +36,8 @@ public class MainWindow extends AnchorPane {
     public void setSpongebob(SpongebobMain d) {
         this.spongebob = d;
         this.spongebob.importTaskList(this);
+        this.displaySpongebobResponse(
+                "Hello, I'm Spongebob Squarepants!\nWhat can I do for you at the Krusty Krab today?");
     }
 
     /**
@@ -45,10 +47,9 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleKrabsInput() {
-        String input = this.krabsInput.getText();
+        String input = this.krabsInput.getText().trim();
         this.dialogContainer.getChildren().addAll(
                 DialogBox.getKrabsDialogBox(input, this.krabsImage));
-
         this.spongebob.getResponse(input, this);
         this.krabsInput.clear();
     }
