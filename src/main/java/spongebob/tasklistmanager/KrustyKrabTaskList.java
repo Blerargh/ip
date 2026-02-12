@@ -29,6 +29,8 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void printTasks(MainWindow guiWindow) {
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         String displayString = "";
         if (this.krustyKrabOrderList.isEmpty()) {
             displayString += "How about making a request first?";
@@ -60,6 +62,9 @@ public class KrustyKrabTaskList {
      * @param guiWindow    The main GUI window to display the results in.
      */
     public void addOrder(String orderDetails, MainWindow guiWindow) {
+        assert orderDetails != null : "Order details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve order details
         String taskDetails = orderDetails.trim();
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
@@ -88,6 +93,9 @@ public class KrustyKrabTaskList {
      */
     public void addDelivery(String deliveryDetails, MainWindow guiWindow)
             throws SpongebobException, ArrayIndexOutOfBoundsException {
+        assert deliveryDetails != null : "Delivery details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve delivery details
         String taskDetails = deliveryDetails.split("/by")[0].trim();
         if (taskDetails.isEmpty()) {
@@ -128,6 +136,9 @@ public class KrustyKrabTaskList {
      */
     public void addReservation(String reservationDetails, MainWindow guiWindow)
             throws SpongebobException, ArrayIndexOutOfBoundsException {
+        assert reservationDetails != null : "Reservation details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve reservation details
         String taskDetails = reservationDetails.split("/from")[0].trim();
         if (taskDetails.isEmpty()) {
@@ -170,6 +181,8 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void deleteTask(int index, MainWindow guiWindow) {
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
             String displayString = "Task removed!\n" + task.toString();
@@ -194,6 +207,8 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void markTask(int index, MainWindow guiWindow) {
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (!task.isCompleted()) {
@@ -224,6 +239,8 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void unmarkTask(int index, MainWindow guiWindow) {
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (task.isCompleted()) {
@@ -254,6 +271,9 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void findTasks(String keyword, MainWindow guiWindow) {
+        assert keyword != null : "Keyword string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         String displayString = "Here are the matching tasks in your Krusty Krab task list:";
 
         boolean anyFound = false;
