@@ -53,6 +53,11 @@ public class MainWindow extends AnchorPane {
         this.krabsInput.clear();
     }
 
+    /**
+     * Displays Spongebob's response in the dialog container.
+     * 
+     * @param s
+     */
     public void displaySpongebobResponse(String s) {
         this.dialogContainer.getChildren().addAll(
                 DialogBox.getSpongebobDialogBox(s, this.spongebobImage));

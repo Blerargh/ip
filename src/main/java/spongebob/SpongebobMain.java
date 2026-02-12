@@ -13,6 +13,12 @@ public class SpongebobMain {
     private KrustyKrabTaskStorage taskStorage = new KrustyKrabTaskStorage();
     private KrustyKrabTaskList taskList;
 
+    /**
+     * Imports the task list from storage.
+     * Displays appropriate messages in the GUI window.
+     * 
+     * @param guiWindow The main GUI window
+     */
     public void importTaskList(MainWindow guiWindow) {
         try {
             this.taskList = this.taskStorage.loadTasks();
@@ -25,6 +31,9 @@ public class SpongebobMain {
 
     /**
      * Generates a response for the user's chat message.
+     * 
+     * @param krabsInput The user's input message
+     * @param mainWindow The main GUI window
      */
     public void getResponse(String krabsInput, MainWindow mainWindow) {
         krabsInput = krabsInput.trim();
