@@ -56,8 +56,8 @@ public class MainWindow extends AnchorPane {
 
     /**
      * Displays Spongebob's response in the dialog container.
-     * 
-     * @param s
+     *
+     * @param s The response string from Spongebob.
      */
     public void displaySpongebobResponse(String s) {
         this.dialogContainer.getChildren().addAll(

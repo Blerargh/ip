@@ -4,6 +4,11 @@ package spongebob.tasktype;
  * Represents an order task at the Krusty Krab.
  */
 public class KrustyKrabOrder extends KrustyKrabTask {
+    /**
+     * Constructor for a Krusty Krab order task.
+     *
+     * @param order The name of the order.
+     */
     public KrustyKrabOrder(String order) {
         super(order);
     }

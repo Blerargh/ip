@@ -16,7 +16,7 @@ public class SpongebobMain {
     /**
      * Imports the task list from storage.
      * Displays appropriate messages in the GUI window.
-     * 
+     *
      * @param guiWindow The main GUI window
      */
     public void importTaskList(MainWindow guiWindow) {
@@ -31,7 +31,7 @@ public class SpongebobMain {
 
     /**
      * Generates a response for the user's chat message.
-     * 
+     *
      * @param krabsInput The user's input message
      * @param mainWindow The main GUI window
      */

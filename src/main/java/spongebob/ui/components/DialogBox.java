@@ -13,6 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
+/**
+ * Represents a dialog box component in the Spongebob GUI.
+ */
 public class DialogBox extends HBox {
     @FXML
     private Label dialog;

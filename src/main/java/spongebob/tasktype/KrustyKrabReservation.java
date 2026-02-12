@@ -10,6 +10,13 @@ public class KrustyKrabReservation extends KrustyKrabTask {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
+    /**
+     * Constructor for a Krusty Krab reservation task.
+     *
+     * @param reservation The details of the reservation.
+     * @param startTime   The start time of the reservation.
+     * @param endTime     The end time of the reservation.
+     */
     public KrustyKrabReservation(String reservation, LocalDateTime startTime, LocalDateTime endTime) {
         super(reservation);
         this.startTime = startTime;

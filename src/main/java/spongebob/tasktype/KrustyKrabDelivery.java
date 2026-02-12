@@ -7,8 +7,14 @@ import java.time.format.DateTimeFormatter;
  * Represents a delivery task at the Krusty Krab.
  */
 public class KrustyKrabDelivery extends KrustyKrabTask {
-    LocalDateTime deliveryDeadline;
+    private LocalDateTime deliveryDeadline;
 
+    /**
+     * Constructor for a Krusty Krab delivery task.
+     *
+     * @param delivery         The details of the delivery.
+     * @param deliveryDeadline The deadline for the delivery.
+     */
     public KrustyKrabDelivery(String delivery, LocalDateTime deliveryDeadline) {
         super(delivery);
         this.deliveryDeadline = deliveryDeadline;
