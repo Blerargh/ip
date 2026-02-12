@@ -19,11 +19,14 @@ import spongebob.ui.components.MainWindow;
  * Interacts with KrustyKrabTaskStorage for saving and loading tasks.
  */
 public class KrustyKrabTaskList {
-    private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+    private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
 
     /**
      * Prints the list of Krusty Krab tasks to the console.
+     *
+     * @param guiWindow The main GUI window to display the results in.
      */
     public void printTasks(MainWindow guiWindow) {
         String displayString = "";
@@ -43,8 +46,8 @@ public class KrustyKrabTaskList {
     /**
      * Adds a general Krusty Krab task to the task list.
      * Reserved for internal use with loading tasks from storage.
-     * 
-     * @param task
+     *
+     * @param task The Krusty Krab task to be added to the task list.
      */
     public void addTask(KrustyKrabTask task) {
         this.krustyKrabOrderList.add(task);
@@ -52,7 +55,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Adds a new Krusty Krab order to the task list.
-     * 
+     *
      * @param orderDetails Details of the order to be added.
      * @param guiWindow    The main GUI window to display the results in.
      */
@@ -75,7 +78,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Adds a new Krusty Krab delivery to the task list.
-     * 
+     *
      * @param deliveryDetails Details of the delivery to be added.
      * @param guiWindow       The main GUI window to display the results in.
      * @throws SpongebobException             If there is an error with the delivery
@@ -115,7 +118,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Adds a new Krusty Krab reservation to the task list.
-     * 
+     *
      * @param reservationDetails Details of the reservation to be added.
      * @param guiWindow          The main GUI window to display the results in.
      * @throws SpongebobException             If there is an error with the
@@ -162,7 +165,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Deletes a Krusty Krab task from the task list based on the provided index.
-     * 
+     *
      * @param index     The index of the task to be deleted.
      * @param guiWindow The main GUI window to display the results in.
      */
@@ -186,7 +189,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Marks a Krusty Krab task as completed based on the provided index.
-     * 
+     *
      * @param index     The index of the task to be marked as completed.
      * @param guiWindow The main GUI window to display the results in.
      */
@@ -216,7 +219,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Unmarks a Krusty Krab task as completed based on the provided index.
-     * 
+     *
      * @param index     The index of the task to be unmarked as completed.
      * @param guiWindow The main GUI window to display the results in.
      */
@@ -246,7 +249,7 @@ public class KrustyKrabTaskList {
 
     /**
      * Finds and displays tasks that match the given keyword.
-     * 
+     *
      * @param keyword   The keyword to search for in the task list.
      * @param guiWindow The main GUI window to display the results in.
      */

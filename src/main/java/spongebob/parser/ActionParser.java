@@ -25,7 +25,7 @@ public enum ActionParser {
 
     /**
      * Extracts the corresponding ActionParser enum from the user input.
-     * 
+     *
      * @param userInput The user input string.
      * @return The corresponding ActionParser enum.
      */
@@ -82,7 +82,7 @@ public enum ActionParser {
     /**
      * Executes the action corresponding to the ActionParser enum on the given
      * KrustyKrabTaskList and original user input.
-     * 
+     *
      * @param action    The ActionParser enum representing the action to be
      *                  executed.
      * @param taskList  The KrustyKrabTaskList on which the action is to be
@@ -170,6 +170,8 @@ public enum ActionParser {
         case EMPTY:
             guiWindow.displaySpongebobResponse("Did you make a request?");
             break;
+        default:
+            guiWindow.displaySpongebobResponse("What are you saying, Mr. Krabs?");
         }
     }
 }

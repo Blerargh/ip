@@ -23,7 +23,7 @@ public class KrustyKrabTaskStorage {
     /**
      * Saves the list of tasks to a file.
      * If the file does not exist, it will be created in "src/main/java/data".
-     * 
+     *
      * @param taskList The list of tasks to be saved.
      */
     public static void saveTasks(ArrayList<KrustyKrabTask> taskList) throws SpongebobException {
@@ -44,7 +44,7 @@ public class KrustyKrabTaskStorage {
      * Loads tasks from the file and reconstructs the task list.
      * If the file does not exist in "src/main/java/data", an empty task list is
      * returned.
-     * 
+     *
      * @return The reconstructed KrustyKrabTaskList.
      */
     public KrustyKrabTaskList loadTasks() throws SpongebobException {

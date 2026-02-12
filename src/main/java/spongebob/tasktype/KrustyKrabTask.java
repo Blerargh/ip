@@ -9,6 +9,11 @@ public class KrustyKrabTask {
     private String taskName;
     private boolean isCompleted;
 
+    /**
+     * Constructor for a general Krusty Krab task.
+     *
+     * @param taskName The name of the task.
+     */
     public KrustyKrabTask(String taskName) {
         this.taskName = taskName;
         this.isCompleted = false;

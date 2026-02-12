@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import spongebob.SpongebobMain;
 import spongebob.ui.components.MainWindow;
 
+/**
+ * The main GUI class for the Spongebob application.
+ */
 public class GuiMain extends Application {
     private ScrollPane scrollPane;
     private VBox dialogContainer;
