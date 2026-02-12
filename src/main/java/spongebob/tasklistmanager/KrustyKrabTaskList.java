@@ -54,6 +54,7 @@ public class KrustyKrabTaskList {
      * Adds a new Krusty Krab order to the task list.
      * 
      * @param orderDetails Details of the order to be added.
+     * @param guiWindow    The main GUI window to display the results in.
      */
     public void addOrder(String orderDetails, MainWindow guiWindow) {
         // Retrieve order details
@@ -76,6 +77,7 @@ public class KrustyKrabTaskList {
      * Adds a new Krusty Krab delivery to the task list.
      * 
      * @param deliveryDetails Details of the delivery to be added.
+     * @param guiWindow       The main GUI window to display the results in.
      * @throws SpongebobException             If there is an error with the delivery
      *                                        details.
      * @throws ArrayIndexOutOfBoundsException If the delivery details are not in the
@@ -115,6 +117,7 @@ public class KrustyKrabTaskList {
      * Adds a new Krusty Krab reservation to the task list.
      * 
      * @param reservationDetails Details of the reservation to be added.
+     * @param guiWindow          The main GUI window to display the results in.
      * @throws SpongebobException             If there is an error with the
      *                                        reservation details.
      * @throws ArrayIndexOutOfBoundsException If the reservation details are not
@@ -160,7 +163,8 @@ public class KrustyKrabTaskList {
     /**
      * Deletes a Krusty Krab task from the task list based on the provided index.
      * 
-     * @param index The index of the task to be deleted.
+     * @param index     The index of the task to be deleted.
+     * @param guiWindow The main GUI window to display the results in.
      */
     public void deleteTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
@@ -183,7 +187,8 @@ public class KrustyKrabTaskList {
     /**
      * Marks a Krusty Krab task as completed based on the provided index.
      * 
-     * @param index The index of the task to be marked as completed.
+     * @param index     The index of the task to be marked as completed.
+     * @param guiWindow The main GUI window to display the results in.
      */
     public void markTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
@@ -212,7 +217,8 @@ public class KrustyKrabTaskList {
     /**
      * Unmarks a Krusty Krab task as completed based on the provided index.
      * 
-     * @param index The index of the task to be unmarked as completed.
+     * @param index     The index of the task to be unmarked as completed.
+     * @param guiWindow The main GUI window to display the results in.
      */
     public void unmarkTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
@@ -238,6 +244,12 @@ public class KrustyKrabTaskList {
         }
     }
 
+    /**
+     * Finds and displays tasks that match the given keyword.
+     * 
+     * @param keyword   The keyword to search for in the task list.
+     * @param guiWindow The main GUI window to display the results in.
+     */
     public void findTasks(String keyword, MainWindow guiWindow) {
         String displayString = "Here are the matching tasks in your Krusty Krab task list:";
 
