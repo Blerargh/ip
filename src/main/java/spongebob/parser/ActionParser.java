@@ -96,6 +96,7 @@ public enum ActionParser {
             taskList.printTasks(guiWindow);
             break;
         case BYE:
+            System.exit(0);
             break;
         case MARK:
             int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
