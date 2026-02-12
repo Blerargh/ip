@@ -1,42 +1,34 @@
 package spongebob;
 
-import java.util.Scanner;
-
+import spongebob.exceptions.SpongebobException;
 import spongebob.parser.ActionParser;
 import spongebob.tasklistmanager.KrustyKrabTaskList;
 import spongebob.tasklistmanager.KrustyKrabTaskStorage;
-import spongebob.ui.SpongebobMainUi;
+import spongebob.ui.components.MainWindow;
 
 /**
  * The main class that runs the Spongebob application.
  */
 public class SpongebobMain {
-    private SpongebobMainUi ui = new SpongebobMainUi();
+    private KrustyKrabTaskStorage taskStorage = new KrustyKrabTaskStorage();
+    private KrustyKrabTaskList taskList;
 
-    public void run() {
-        KrustyKrabTaskList taskList = KrustyKrabTaskStorage.loadTasks();
-        this.ui.printWelcomeMessage();
-
-        // Main loop to process user input
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            String userInput = scanner.nextLine();
-            userInput = userInput.trim();
-
-            this.ui.printHorizontalLine();
-            ActionParser action = ActionParser.fromString(userInput);
-            ActionParser.executeAction(action, taskList, userInput);
-
-            if (action.equals(ActionParser.BYE)) {
-                this.ui.printGoodbyeMessage();
-                break;
-            }
-            this.ui.printHorizontalLine();
+    public void importTaskList(MainWindow guiWindow) {
+        try {
+            this.taskList = this.taskStorage.loadTasks();
+            guiWindow.displaySpongebobResponse("Tasks loaded successfully.");
+        } catch (SpongebobException e) {
+            this.taskList = new KrustyKrabTaskList();
+            guiWindow.displaySpongebobResponse(e.getMessage());
         }
-        scanner.close();
     }
 
-    public static void main(String[] args) {
-        new SpongebobMain().run();
+    /**
+     * Generates a response for the user's chat message.
+     */
+    public void getResponse(String krabsInput, MainWindow mainWindow) {
+        krabsInput = krabsInput.trim();
+        ActionParser action = ActionParser.fromString(krabsInput);
+        ActionParser.executeAction(action, this.taskList, krabsInput, mainWindow);
     }
 }

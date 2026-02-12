@@ -2,6 +2,7 @@ package spongebob.parser;
 
 import spongebob.exceptions.SpongebobException;
 import spongebob.tasklistmanager.KrustyKrabTaskList;
+import spongebob.ui.components.MainWindow;
 
 /**
  * Parses user actions and executes corresponding methods in KrustyKrabTaskList.
@@ -88,83 +89,84 @@ public enum ActionParser {
      *                  executed.
      * @param userInput The original user input string.
      */
-    public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput) {
+    public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput,
+            MainWindow guiWindow) {
         switch (action) {
         case LIST:
-            taskList.printTasks();
+            taskList.printTasks(guiWindow);
             break;
         case BYE:
             break;
         case MARK:
             int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.markTask(indexToMark);
+            taskList.markTask(indexToMark, guiWindow);
             break;
         case UNMARK:
             int indexToUnmark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.unmarkTask(indexToUnmark);
+            taskList.unmarkTask(indexToUnmark, guiWindow);
             break;
         case MARK_ERROR:
-            System.out.println("Which task are you referring to?");
+            guiWindow.displaySpongebobResponse("Which task are you referring to?");
             break;
         case UNMARK_ERROR:
-            System.out.println("Which task are you referring to?");
+            guiWindow.displaySpongebobResponse("Which task are you referring to?");
             break;
         case ADD_ORDER:
             try {
                 String orderDetails = userInput.substring(6);
-                taskList.addOrder(orderDetails);
+                taskList.addOrder(orderDetails, guiWindow);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("What Krabby Patty order would you like to make?");
+                guiWindow.displaySpongebobResponse("What Krabby Patty order would you like to make?");
             }
             break;
         case ADD_DELIVERY:
             try {
                 String deliveryDetails = userInput.substring(9);
-                taskList.addDelivery(deliveryDetails);
+                taskList.addDelivery(deliveryDetails, guiWindow);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("What delivery order would you like to make?");
+                guiWindow.displaySpongebobResponse("What delivery order would you like to make?");
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("By when should I deliver the Krabby Patty?");
+                guiWindow.displaySpongebobResponse("By when should I deliver the Krabby Patty?");
             } catch (SpongebobException e) {
-                System.out.println(e.getMessage());
+                guiWindow.displaySpongebobResponse(e.getMessage());
             }
             break;
         case ADD_RESERVATION:
             try {
                 String reservationDetails = userInput.substring(12);
-                taskList.addReservation(reservationDetails);
+                taskList.addReservation(reservationDetails, guiWindow);
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("What reservation would you like to make?");
+                guiWindow.displaySpongebobResponse("What reservation would you like to make?");
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("From when to when do you want to reserve the Krusty Krab?");
+                guiWindow.displaySpongebobResponse("From when to when do you want to reserve the Krusty Krab?");
             } catch (SpongebobException e) {
-                System.out.println(e.getMessage());
+                guiWindow.displaySpongebobResponse(e.getMessage());
             }
             break;
         case DELETE:
             int indexToDelete = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.deleteTask(indexToDelete);
+            taskList.deleteTask(indexToDelete, guiWindow);
             break;
         case DELETE_ERROR:
-            System.out.println("Which task are you referring to?");
+            guiWindow.displaySpongebobResponse("Which task are you referring to?");
             break;
         case FIND:
             try {
                 String keyword = userInput.substring(5).trim();
                 if (keyword.isEmpty()) {
-                    System.out.println("Please enter valid keyword(s) to search for!");
+                    guiWindow.displaySpongebobResponse("Please enter valid keyword(s) to search for!");
                 } else {
-                    taskList.findTasks(keyword);
+                    taskList.findTasks(keyword, guiWindow);
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                System.out.println("Please enter valid keyword(s) to search for!");
+                guiWindow.displaySpongebobResponse("Please enter valid keyword(s) to search for!");
             }
             break;
         case ERROR:
-            System.out.println("What are you saying, Mr. Krabs?");
+            guiWindow.displaySpongebobResponse("What are you saying, Mr. Krabs?");
             break;
         case EMPTY:
-            System.out.println("Did you make a request?");
+            guiWindow.displaySpongebobResponse("Did you make a request?");
             break;
         }
     }

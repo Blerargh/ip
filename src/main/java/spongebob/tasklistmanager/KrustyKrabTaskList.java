@@ -10,6 +10,7 @@ import spongebob.tasktype.KrustyKrabDelivery;
 import spongebob.tasktype.KrustyKrabOrder;
 import spongebob.tasktype.KrustyKrabReservation;
 import spongebob.tasktype.KrustyKrabTask;
+import spongebob.ui.components.MainWindow;
 
 /**
  * Manages the list of Krusty Krab tasks including orders, deliveries, and
@@ -19,20 +20,34 @@ import spongebob.tasktype.KrustyKrabTask;
  */
 public class KrustyKrabTaskList {
     private ArrayList<KrustyKrabTask> krustyKrabOrderList = new ArrayList<>();
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     /**
      * Prints the list of Krusty Krab tasks to the console.
      */
-    public void printTasks() {
+    public void printTasks(MainWindow guiWindow) {
+        String displayString = "";
         if (this.krustyKrabOrderList.isEmpty()) {
-            System.out.println("How about making a request first?");
+            displayString += "How about making a request first?";
         } else {
+            displayString += "Here are the tasks in your Krusty Krab task list:";
             for (int i = 0; i < this.krustyKrabOrderList.size(); i++) {
-                String str = "Krabby Patty Task " + (i + 1) + ": ";
+                displayString += "\nKrabby Patty Task " + (i + 1) + ": ";
                 KrustyKrabTask order = this.krustyKrabOrderList.get(i);
-                System.out.println(str + order.toString());
+                displayString += order.toString();
             }
         }
+        guiWindow.displaySpongebobResponse(displayString);
+    }
+
+    /**
+     * Adds a general Krusty Krab task to the task list.
+     * Reserved for internal use with loading tasks from storage.
+     * 
+     * @param task
+     */
+    public void addTask(KrustyKrabTask task) {
+        this.krustyKrabOrderList.add(task);
     }
 
     /**
@@ -40,13 +55,21 @@ public class KrustyKrabTaskList {
      * 
      * @param orderDetails Details of the order to be added.
      */
-    public void addOrder(String orderDetails) {
+    public void addOrder(String orderDetails, MainWindow guiWindow) {
         // Retrieve order details
         String taskDetails = orderDetails.trim();
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
         this.krustyKrabOrderList.add(newOrder);
-        System.out.println("Krabby Patty Order received!\n" + newOrder.toString());
-        KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+        String displayString = "Krabby Patty Order received!\n" + newOrder.toString();
+
+        try {
+            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+            displayString += "\nTasks saved successfully!";
+        } catch (SpongebobException e) {
+            displayString += String.format("\n%s", e.getMessage());
+        }
+
+        guiWindow.displaySpongebobResponse(displayString);
     }
 
     /**
@@ -58,7 +81,8 @@ public class KrustyKrabTaskList {
      * @throws ArrayIndexOutOfBoundsException If the delivery details are not in the
      *                                        expected format.
      */
-    public void addDelivery(String deliveryDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
+    public void addDelivery(String deliveryDetails, MainWindow guiWindow)
+            throws SpongebobException, ArrayIndexOutOfBoundsException {
         // Retrieve delivery details
         String taskDetails = deliveryDetails.split("/by")[0].trim();
         if (taskDetails.isEmpty()) {
@@ -69,11 +93,18 @@ public class KrustyKrabTaskList {
         // Check for valid date time format
         try {
             LocalDateTime deliverBy = LocalDateTime.parse(deliveryDeadline,
-                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+                    KrustyKrabTaskList.DATE_TIME_FORMATTER);
             KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliverBy);
             this.krustyKrabOrderList.add(newDelivery);
-            System.out.println("Krabby Patty Delivery scheduled!\n" + newDelivery.toString());
-            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+            String displayString = "Krabby Patty Delivery scheduled!\n" + newDelivery.toString();
+
+            try {
+                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                displayString += "\nTasks saved successfully!";
+            } catch (SpongebobException e) {
+                displayString += String.format("\n%s", e.getMessage());
+            }
+            guiWindow.displaySpongebobResponse(displayString);
         } catch (DateTimeParseException e) {
             throw new SpongebobException("Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.");
         }
@@ -89,7 +120,8 @@ public class KrustyKrabTaskList {
      * @throws ArrayIndexOutOfBoundsException If the reservation details are not
      *                                        inthe expected format.
      */
-    public void addReservation(String reservationDetails) throws SpongebobException, ArrayIndexOutOfBoundsException {
+    public void addReservation(String reservationDetails, MainWindow guiWindow)
+            throws SpongebobException, ArrayIndexOutOfBoundsException {
         // Retrieve reservation details
         String taskDetails = reservationDetails.split("/from")[0].trim();
         if (taskDetails.isEmpty()) {
@@ -101,9 +133,9 @@ public class KrustyKrabTaskList {
         // Check for valid date time format
         try {
             LocalDateTime startTime = LocalDateTime.parse(reservationStartTime,
-                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+                    KrustyKrabTaskList.DATE_TIME_FORMATTER);
             LocalDateTime endTime = LocalDateTime.parse(reservationEndTime,
-                    DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+                    KrustyKrabTaskList.DATE_TIME_FORMATTER);
             if (endTime.isBefore(startTime)) {
                 throw new SpongebobException("What do you mean your reservation ends before it starts?");
             }
@@ -111,8 +143,15 @@ public class KrustyKrabTaskList {
             // If valid, add reservation to list
             KrustyKrabReservation newReservation = new KrustyKrabReservation(taskDetails, startTime, endTime);
             this.krustyKrabOrderList.add(newReservation);
-            System.out.println("Krusty Krab Reservation made!\n" + newReservation.toString());
-            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+            String displayString = "Krusty Krab Reservation made!\n" + newReservation.toString();
+
+            try {
+                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                displayString += "\nTasks saved successfully!";
+            } catch (SpongebobException e) {
+                displayString += "\nAn error occurred while saving tasks.";
+            }
+            guiWindow.displaySpongebobResponse(displayString);
         } catch (DateTimeParseException e) {
             throw new SpongebobException("Please enter the reservation time in the format dd-MM-yyyy HH:mm.");
         }
@@ -123,13 +162,21 @@ public class KrustyKrabTaskList {
      * 
      * @param index The index of the task to be deleted.
      */
-    public void deleteTask(int index) {
+    public void deleteTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.remove(index);
-            System.out.println("Task removed!\n" + task.toString());
-            KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+            String displayString = "Task removed!\n" + task.toString();
+
+            try {
+                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                displayString += "\nTasks saved successfully!";
+            } catch (SpongebobException e) {
+                displayString += "\nAn error occurred while saving tasks.";
+            }
+            guiWindow.displaySpongebobResponse(displayString);
         } else {
-            System.out.println("Which task are you referring to?");
+            String displayString = "Which task are you referring to?";
+            guiWindow.displaySpongebobResponse(displayString);
         }
     }
 
@@ -138,18 +185,27 @@ public class KrustyKrabTaskList {
      * 
      * @param index The index of the task to be marked as completed.
      */
-    public void markTask(int index) {
+    public void markTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (!task.isCompleted()) {
                 task.markComplete();
-                System.out.println("Task complete!\n" + task.toString());
-                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                String displayString = "Task complete!\n" + task.toString();
+
+                try {
+                    KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                    displayString += "\nTasks saved successfully!";
+                } catch (SpongebobException e) {
+                    displayString += "\nAn error occurred while saving tasks.";
+                }
+                guiWindow.displaySpongebobResponse(displayString);
             } else {
-                System.out.println("This task is already completed!\n" + task.toString());
+                String displayString = "This task is already completed!\n" + task.toString();
+                guiWindow.displaySpongebobResponse(displayString);
             }
         } else {
-            System.out.println("Which task are you referring to?");
+            String displayString = "Which task are you referring to?";
+            guiWindow.displaySpongebobResponse(displayString);
         }
     }
 
@@ -158,34 +214,45 @@ public class KrustyKrabTaskList {
      * 
      * @param index The index of the task to be unmarked as completed.
      */
-    public void unmarkTask(int index) {
+    public void unmarkTask(int index, MainWindow guiWindow) {
         if (index >= 0 && index < this.krustyKrabOrderList.size()) {
             KrustyKrabTask task = this.krustyKrabOrderList.get(index);
             if (task.isCompleted()) {
                 task.markIncomplete();
-                System.out.println("Task cancelled!\n" + task.toString());
-                KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                String displayString = "Task cancelled!\n" + task.toString();
+
+                try {
+                    KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
+                    displayString += "\nTasks saved successfully!";
+                } catch (SpongebobException e) {
+                    displayString += "\nAn error occurred while saving tasks.";
+                }
+                guiWindow.displaySpongebobResponse(displayString);
             } else {
-                System.out.println("This task is not completed yet!\n" + task.toString());
+                String displayString = "This task is not completed yet!\n" + task.toString();
+                guiWindow.displaySpongebobResponse(displayString);
             }
         } else {
-            System.out.println("Which task are you referring to?");
+            String displayString = "Which task are you referring to?";
+            guiWindow.displaySpongebobResponse(displayString);
         }
     }
 
-    public void findTasks(String keyword) {
-        System.out.println("Here are the matching tasks in your Krusty Krab task list:");
+    public void findTasks(String keyword, MainWindow guiWindow) {
+        String displayString = "Here are the matching tasks in your Krusty Krab task list:";
 
         boolean anyFound = false;
         for (KrustyKrabTask task : this.krustyKrabOrderList) {
             if (task.matchesKeyword(keyword)) {
                 anyFound = true;
-                System.out.println(task.toString());
+                displayString += '\n' + task.toString();
             }
         }
 
         if (!anyFound) {
-            System.out.println("...No matching tasks found, are you sure you made such a request?");
+            displayString += '\n' + "...No matching tasks found, are you sure you made such a request?";
         }
+
+        guiWindow.displaySpongebobResponse(displayString);
     }
 }
