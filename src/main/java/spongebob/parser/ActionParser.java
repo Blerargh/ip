@@ -88,6 +88,7 @@ public enum ActionParser {
      * @param taskList  The KrustyKrabTaskList on which the action is to be
      *                  executed.
      * @param userInput The original user input string.
+     * @param guiWindow The main GUI window to display the results in.
      */
     public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput,
             MainWindow guiWindow) {
