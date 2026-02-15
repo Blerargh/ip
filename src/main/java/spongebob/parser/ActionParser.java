@@ -92,6 +92,11 @@ public enum ActionParser {
      */
     public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput,
             MainWindow guiWindow) {
+        assert action != null : "ActionParser action should not be null";
+        assert taskList != null : "KrustyKrabTaskList taskList should not be null";
+        assert userInput != null : "User input string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         switch (action) {
         case LIST:
             taskList.printTasks(guiWindow);

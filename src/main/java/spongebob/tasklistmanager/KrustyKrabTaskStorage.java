@@ -27,6 +27,8 @@ public class KrustyKrabTaskStorage {
      * @param taskList The list of tasks to be saved.
      */
     public static void saveTasks(ArrayList<KrustyKrabTask> taskList) throws SpongebobException {
+        assert taskList != null : "Task list should not be null";
+
         Path path = Paths.get("src/main/java/data");
         try {
             Files.createDirectories(path);
@@ -84,6 +86,8 @@ public class KrustyKrabTaskStorage {
                     loadedTask = new KrustyKrabOrder(details);
                     break;
                 }
+
+                assert loadedTask != null : "Loaded task should not be null";
 
                 // Mark task as done if applicable
                 if (isDone) {
