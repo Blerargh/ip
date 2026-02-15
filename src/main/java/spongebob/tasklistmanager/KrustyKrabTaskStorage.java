@@ -90,6 +90,8 @@ public class KrustyKrabTaskStorage {
                         break;
                     }
 
+                    assert loadedTask != null : "Loaded task should not be null";
+
                     // Mark task as done if applicable
                     if (isDone) {
                         loadedTask.markComplete();
