@@ -37,7 +37,6 @@ public class SpongebobMain {
      */
     public void getResponse(String krabsInput, MainWindow mainWindow) {
         krabsInput = krabsInput.trim();
-        ActionParser action = ActionParser.fromString(krabsInput);
-        ActionParser.executeAction(action, this.taskList, krabsInput, mainWindow);
+        ActionParser.fromStringToExecuteCommand(krabsInput, this.taskList, mainWindow);
     }
 }

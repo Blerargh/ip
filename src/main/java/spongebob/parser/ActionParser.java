@@ -1,5 +1,17 @@
 package spongebob.parser;
 
+import spongebob.commands.KrustyKrabTaskCommand;
+import spongebob.commands.subcommands.AddDeliveryCommand;
+import spongebob.commands.subcommands.AddOrderCommand;
+import spongebob.commands.subcommands.AddReservationCommand;
+import spongebob.commands.subcommands.ByeCommand;
+import spongebob.commands.subcommands.DeleteCommand;
+import spongebob.commands.subcommands.EmptyCommand;
+import spongebob.commands.subcommands.FindCommand;
+import spongebob.commands.subcommands.ListCommand;
+import spongebob.commands.subcommands.MarkCommand;
+import spongebob.commands.subcommands.UnknownCommand;
+import spongebob.commands.subcommands.UnmarkCommand;
 import spongebob.exceptions.SpongebobException;
 import spongebob.tasklistmanager.KrustyKrabTaskList;
 import spongebob.ui.components.MainWindow;
@@ -13,165 +25,61 @@ public enum ActionParser {
     MARK,
     UNMARK,
     BYE,
-    ERROR,
-    MARK_ERROR,
-    UNMARK_ERROR,
     ADD_ORDER,
     ADD_DELIVERY,
     ADD_RESERVATION,
     DELETE,
-    DELETE_ERROR,
+    UNKNOWN,
     FIND;
 
     /**
-     * Extracts the corresponding ActionParser enum from the user input.
+     * Extracts then executes the corresponding KrustyKrabTaskCommand from the user
+     * input.
      *
-     * @param userInput The user input string.
-     * @return The corresponding ActionParser enum.
+     * @param krabsInput The user input string.
+     * @param taskList   The KrustyKrabTaskList to update.
+     * @param guiWindow  The main GUI window to display Spongebob responses.
      */
-    public static ActionParser fromString(String userInput) {
-        String[] words = userInput.split(" ");
+    public static void fromStringToExecuteCommand(String krabsInput, KrustyKrabTaskList taskList,
+            MainWindow guiWindow) {
+        String[] words = krabsInput.split(" ");
         String firstWord = words[0].toLowerCase();
-        switch (firstWord) {
-        case "list":
-            if (words.length == 1) {
-                return LIST;
-            }
-            return ERROR;
-        case "mark":
-            if (words.length == 1) {
-                return MARK_ERROR;
-            } else if (words.length == 2 && words[1].matches("\\d+")) {
-                return MARK;
-            }
-            return MARK_ERROR;
-        case "unmark":
-            if (words.length == 1) {
-                return UNMARK_ERROR;
-            } else if (words.length == 2 && words[1].matches("\\d+")) {
-                return UNMARK;
-            }
-            return UNMARK_ERROR;
-        case "bye":
-            if (words.length == 1) {
-                return BYE;
-            }
-            return ERROR;
-        case "order":
-            return ADD_ORDER;
-        case "delivery":
-            return ADD_DELIVERY;
-        case "reservation":
-            return ADD_RESERVATION;
-        case "delete":
-            if (words.length == 1) {
-                return DELETE_ERROR;
-            } else if (words.length == 2 && words[1].matches("\\d+")) {
-                return DELETE;
-            }
-            return DELETE_ERROR;
-        case "find":
-            return FIND;
-        case "":
-            return EMPTY;
-        default:
-            return ERROR;
+
+        try {
+            KrustyKrabTaskCommand command = ActionParser.extractCommand(firstWord, krabsInput);
+            command.execute(guiWindow, taskList);
+        } catch (StringIndexOutOfBoundsException e) {
+            guiWindow.displaySpongebobResponse("Please provide more details for your request.");
+        } catch (SpongebobException e) {
+            guiWindow.displaySpongebobResponse(e.getMessage());
         }
     }
 
-    /**
-     * Executes the action corresponding to the ActionParser enum on the given
-     * KrustyKrabTaskList and original user input.
-     *
-     * @param action    The ActionParser enum representing the action to be
-     *                  executed.
-     * @param taskList  The KrustyKrabTaskList on which the action is to be
-     *                  executed.
-     * @param userInput The original user input string.
-     * @param guiWindow The main GUI window to display the results in.
-     */
-    public static void executeAction(ActionParser action, KrustyKrabTaskList taskList, String userInput,
-            MainWindow guiWindow) {
-        switch (action) {
-        case LIST:
-            taskList.printTasks(guiWindow);
-            break;
-        case BYE:
-            System.exit(0);
-            break;
-        case MARK:
-            int indexToMark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.markTask(indexToMark, guiWindow);
-            break;
-        case UNMARK:
-            int indexToUnmark = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.unmarkTask(indexToUnmark, guiWindow);
-            break;
-        case MARK_ERROR:
-            guiWindow.displaySpongebobResponse("Which task are you referring to?");
-            break;
-        case UNMARK_ERROR:
-            guiWindow.displaySpongebobResponse("Which task are you referring to?");
-            break;
-        case ADD_ORDER:
-            try {
-                String orderDetails = userInput.substring(6);
-                taskList.addOrder(orderDetails, guiWindow);
-            } catch (StringIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("What Krabby Patty order would you like to make?");
-            }
-            break;
-        case ADD_DELIVERY:
-            try {
-                String deliveryDetails = userInput.substring(9);
-                taskList.addDelivery(deliveryDetails, guiWindow);
-            } catch (StringIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("What delivery order would you like to make?");
-            } catch (ArrayIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("By when should I deliver the Krabby Patty?");
-            } catch (SpongebobException e) {
-                guiWindow.displaySpongebobResponse(e.getMessage());
-            }
-            break;
-        case ADD_RESERVATION:
-            try {
-                String reservationDetails = userInput.substring(12);
-                taskList.addReservation(reservationDetails, guiWindow);
-            } catch (StringIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("What reservation would you like to make?");
-            } catch (ArrayIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("From when to when do you want to reserve the Krusty Krab?");
-            } catch (SpongebobException e) {
-                guiWindow.displaySpongebobResponse(e.getMessage());
-            }
-            break;
-        case DELETE:
-            int indexToDelete = Integer.parseInt(userInput.split(" ")[1]) - 1;
-            taskList.deleteTask(indexToDelete, guiWindow);
-            break;
-        case DELETE_ERROR:
-            guiWindow.displaySpongebobResponse("Which task are you referring to?");
-            break;
-        case FIND:
-            try {
-                String keyword = userInput.substring(5).trim();
-                if (keyword.isEmpty()) {
-                    guiWindow.displaySpongebobResponse("Please enter valid keyword(s) to search for!");
-                } else {
-                    taskList.findTasks(keyword, guiWindow);
-                }
-            } catch (StringIndexOutOfBoundsException e) {
-                guiWindow.displaySpongebobResponse("Please enter valid keyword(s) to search for!");
-            }
-            break;
-        case ERROR:
-            guiWindow.displaySpongebobResponse("What are you saying, Mr. Krabs?");
-            break;
-        case EMPTY:
-            guiWindow.displaySpongebobResponse("Did you make a request?");
-            break;
+    private static KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
+            throws StringIndexOutOfBoundsException {
+        switch (firstWord) {
+        case "list":
+            return new ListCommand(krabsInput.substring(4).trim());
+        case "mark":
+            return new MarkCommand(krabsInput.substring(4).trim());
+        case "unmark":
+            return new UnmarkCommand(krabsInput.substring(6).trim());
+        case "bye":
+            return new ByeCommand(krabsInput.substring(3).trim());
+        case "order":
+            return new AddOrderCommand(krabsInput.substring(5).trim());
+        case "delivery":
+            return new AddDeliveryCommand(krabsInput.substring(8).trim());
+        case "reservation":
+            return new AddReservationCommand(krabsInput.substring(11).trim());
+        case "delete":
+            return new DeleteCommand(krabsInput.substring(6).trim());
+        case "find":
+            return new FindCommand(krabsInput.substring(4).trim());
+        case "":
+            return new EmptyCommand(krabsInput);
         default:
-            guiWindow.displaySpongebobResponse("What are you saying, Mr. Krabs?");
+            return new UnknownCommand(krabsInput);
         }
     }
 }
