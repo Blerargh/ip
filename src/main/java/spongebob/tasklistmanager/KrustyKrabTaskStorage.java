@@ -52,55 +52,67 @@ public class KrustyKrabTaskStorage {
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
 
         try {
-            if (Files.exists(filePath)) {
-                ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(filePath);
-                for (int i = 0; i < lines.size(); i++) {
-                    String line = lines.get(i);
-                    char taskType = line.charAt(1);
-                    boolean isDone = line.charAt(4) == 'X';
-
-                    // Reconstruct task list based on saved data
-                    KrustyKrabTask loadedTask;
-                    switch (taskType) {
-                    case 'D':
-                        String deliveryDetails = line.substring(7, line.indexOf("(by:") - 1);
-                        LocalDateTime deliveryBy = LocalDateTime
-                                .parse(line.substring(line.indexOf("(by:") + 5, line.length() - 1),
-                                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
-
-                        loadedTask = new KrustyKrabDelivery(deliveryDetails, deliveryBy);
-                        break;
-                    case 'R':
-                        String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
-                        LocalDateTime reservationFrom = LocalDateTime.parse(line.substring(line.indexOf("(from:") + 7,
-                                line.indexOf("to:") - 1),
-                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
-                        LocalDateTime reservationTo = LocalDateTime.parse(
-                                line.substring(line.indexOf("to:") + 4, line.length() - 1),
-                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
-
-                        loadedTask = new KrustyKrabReservation(reservationDetails, reservationFrom,
-                                reservationTo);
-                        break;
-                    default:
-                        String details = line.substring(7);
-                        loadedTask = new KrustyKrabOrder(details);
-                        break;
-                    }
-
-                    // Mark task as done if applicable
-                    if (isDone) {
-                        loadedTask.markComplete();
-                    }
-                    taskList.addTask(loadedTask);
-                }
-            } else {
-                throw new SpongebobException("No saved tasks found.");
+            ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(filePath);
+            for (int i = 0; i < lines.size(); i++) {
+                String line = lines.get(i);
+                KrustyKrabTask loadedTask = this.convertFileLineToTask(line);
+                taskList.addTask(loadedTask);
             }
         } catch (IOException e) {
-            throw new SpongebobException("An error occurred while loading tasks.");
+            throw new SpongebobException("No saved tasks found.");
         }
 
         return taskList;
+    }
+
+    private KrustyKrabTask convertFileLineToTask(String line) {
+        char taskType = line.charAt(1);
+        boolean isDone = line.charAt(4) == 'X';
+
+        // Reconstruct task list based on saved data
+        KrustyKrabTask loadedTask;
+        switch (taskType) {
+        case 'D':
+            loadedTask = this.parseDeliveryLine(line);
+            break;
+        case 'R':
+            loadedTask = this.parseReservationLine(line);
+            break;
+        default:
+            loadedTask = this.parseOrderLine(line);
+        }
+
+        // Mark task as done if applicable
+        if (isDone) {
+            loadedTask.markComplete();
+        }
+
+        return loadedTask;
+    }
+
+    private KrustyKrabOrder parseOrderLine(String line) {
+        String orderDetails = line.substring(7);
+        return new KrustyKrabOrder(orderDetails);
+    }
+
+    private KrustyKrabDelivery parseDeliveryLine(String line) {
+        String deliveryDetails = line.substring(7, line.indexOf("(by:") - 1);
+        LocalDateTime deliveryBy = LocalDateTime
+                .parse(line.substring(line.indexOf("(by:") + 5, line.length() - 1),
+                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
+
+        return new KrustyKrabDelivery(deliveryDetails, deliveryBy);
+    }
+
+    private KrustyKrabReservation parseReservationLine(String line) {
+        String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
+        LocalDateTime reservationFrom = LocalDateTime
+                .parse(line.substring(line.indexOf("(from:") + 6, line.indexOf("(to:") - 1),
+                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
+        LocalDateTime reservationTo = LocalDateTime
+                .parse(line.substring(line.indexOf("(to:") + 4, line.length() - 1),
+                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
+
+        return new KrustyKrabReservation(reservationDetails, reservationFrom, reservationTo);
     }
 }
