@@ -54,53 +54,47 @@ public class KrustyKrabTaskStorage {
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
 
         try {
-            if (Files.exists(filePath)) {
-                ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(filePath);
-                for (int i = 0; i < lines.size(); i++) {
-                    String line = lines.get(i);
-                    char taskType = line.charAt(1);
-                    boolean isDone = line.charAt(4) == 'X';
+            Files.lines(filePath).map(line -> {
+                char taskType = line.charAt(1);
+                boolean isDone = line.charAt(4) == 'X';
 
-                    // Reconstruct task list based on saved data
-                    KrustyKrabTask loadedTask;
-                    switch (taskType) {
-                    case 'D':
-                        String deliveryDetails = line.substring(7, line.indexOf("(by:") - 1);
-                        LocalDateTime deliveryBy = LocalDateTime
-                                .parse(line.substring(line.indexOf("(by:") + 5, line.length() - 1),
-                                        KrustyKrabTaskList.DATE_TIME_FORMATTER);
+                // Reconstruct task list based on saved data
+                KrustyKrabTask loadedTask;
+                switch (taskType) {
+                case 'D':
+                    String deliveryDetails = line.substring(7, line.indexOf("(by:") - 1);
+                    LocalDateTime deliveryBy = LocalDateTime
+                            .parse(line.substring(line.indexOf("(by:") + 5, line.length() - 1),
+                                    KrustyKrabTaskList.DATE_TIME_FORMATTER);
 
-                        loadedTask = new KrustyKrabDelivery(deliveryDetails, deliveryBy);
-                        break;
-                    case 'R':
-                        String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
-                        LocalDateTime reservationFrom = LocalDateTime.parse(line.substring(line.indexOf("(from:") + 7,
-                                line.indexOf("to:") - 1),
-                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
-                        LocalDateTime reservationTo = LocalDateTime.parse(
-                                line.substring(line.indexOf("to:") + 4, line.length() - 1),
-                                KrustyKrabTaskList.DATE_TIME_FORMATTER);
+                    loadedTask = new KrustyKrabDelivery(deliveryDetails, deliveryBy);
+                    break;
+                case 'R':
+                    String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
+                    LocalDateTime reservationFrom = LocalDateTime.parse(line.substring(line.indexOf("(from:") + 7,
+                            line.indexOf("to:") - 1),
+                            KrustyKrabTaskList.DATE_TIME_FORMATTER);
+                    LocalDateTime reservationTo = LocalDateTime.parse(
+                            line.substring(line.indexOf("to:") + 4, line.length() - 1),
+                            KrustyKrabTaskList.DATE_TIME_FORMATTER);
 
-                        loadedTask = new KrustyKrabReservation(reservationDetails, reservationFrom,
-                                reservationTo);
-                        break;
-                    default:
-                        String details = line.substring(7);
-                        loadedTask = new KrustyKrabOrder(details);
-                        break;
-                    }
-
-                    assert loadedTask != null : "Loaded task should not be null";
-
-                    // Mark task as done if applicable
-                    if (isDone) {
-                        loadedTask.markComplete();
-                    }
-                    taskList.addTask(loadedTask);
+                    loadedTask = new KrustyKrabReservation(reservationDetails, reservationFrom,
+                            reservationTo);
+                    break;
+                default:
+                    String details = line.substring(7);
+                    loadedTask = new KrustyKrabOrder(details);
+                    break;
                 }
-            } else {
-                throw new SpongebobException("No saved tasks found.");
-            }
+
+                assert loadedTask != null : "Loaded task should not be null";
+
+                // Mark task as done if applicable
+                if (isDone) {
+                    loadedTask.markComplete();
+                }
+                return loadedTask;
+            }).forEach(taskList::addTask);
         } catch (IOException e) {
             throw new SpongebobException("An error occurred while loading tasks.");
         }
