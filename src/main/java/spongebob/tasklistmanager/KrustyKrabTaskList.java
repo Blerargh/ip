@@ -97,11 +97,15 @@ public class KrustyKrabTaskList {
         assert guiWindow != null : "MainWindow guiWindow should not be null";
 
         // Retrieve delivery details
-        String taskDetails = deliveryDetails.split("/by")[0].trim();
+        String[] partDetails = deliveryDetails.split("/by");
+        assert partDetails.length == 2
+                : "Delivery details should contain both task details and delivery deadline separated by '/by'";
+
+        String taskDetails = partDetails[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What delivery order would you like to make?");
         }
-        String deliveryDeadline = deliveryDetails.split("/by")[1].trim();
+        String deliveryDeadline = partDetails[1].trim();
 
         // Check for valid date time format
         try {
@@ -140,12 +144,21 @@ public class KrustyKrabTaskList {
         assert guiWindow != null : "MainWindow guiWindow should not be null";
 
         // Retrieve reservation details
-        String taskDetails = reservationDetails.split("/from")[0].trim();
+        String[] partDetailsSplitByFrom = reservationDetails.split("/from");
+        assert partDetailsSplitByFrom.length == 2
+                : "There should only be a single '/from' separator in the reservation details";
+
+        String taskDetails = partDetailsSplitByFrom[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What reservation would you like to make?");
         }
-        String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
-        String reservationEndTime = reservationDetails.split("/to")[1].trim();
+
+        String[] partDetailsSplitByTo = partDetailsSplitByFrom[1].split("/to");
+        assert partDetailsSplitByTo.length == 2
+                : "There should only be a single '/to' separator in the reservation details";
+
+        String reservationStartTime = partDetailsSplitByTo[0].trim();
+        String reservationEndTime = partDetailsSplitByTo[1].trim();
 
         // Check for valid date time format
         try {
