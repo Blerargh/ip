@@ -43,7 +43,19 @@ public class ActionParser {
         }
     }
 
-    private KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
+    /**
+     * Extracts the corresponding KrustyKrabTaskCommand from the user input.
+     *
+     * @param firstWord  The first word of the user input, used to determine the
+     *                   command type.
+     * @param krabsInput The full user input string, which may contain additional
+     *                   details needed to execute the command.
+     * @return The corresponding KrustyKrabTaskCommand based on the first word of
+     *         the user input.
+     * @throws StringIndexOutOfBoundsException If the user input does not contain
+     *                                         enough details for the command.
+     */
+    public KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
             throws StringIndexOutOfBoundsException {
         switch (firstWord) {
         case "list":
