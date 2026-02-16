@@ -19,19 +19,7 @@ import spongebob.ui.components.MainWindow;
 /**
  * Parses user actions and executes corresponding methods in KrustyKrabTaskList.
  */
-public enum ActionParser {
-    EMPTY,
-    LIST,
-    MARK,
-    UNMARK,
-    BYE,
-    ADD_ORDER,
-    ADD_DELIVERY,
-    ADD_RESERVATION,
-    DELETE,
-    UNKNOWN,
-    FIND;
-
+public class ActionParser {
     /**
      * Extracts then executes the corresponding KrustyKrabTaskCommand from the user
      * input.
@@ -40,13 +28,13 @@ public enum ActionParser {
      * @param taskList   The KrustyKrabTaskList to update.
      * @param guiWindow  The main GUI window to display Spongebob responses.
      */
-    public static void fromStringToExecuteCommand(String krabsInput, KrustyKrabTaskList taskList,
+    public void fromStringToExecuteCommand(String krabsInput, KrustyKrabTaskList taskList,
             MainWindow guiWindow) {
         String[] words = krabsInput.split(" ");
         String firstWord = words[0].toLowerCase();
 
         try {
-            KrustyKrabTaskCommand command = ActionParser.extractCommand(firstWord, krabsInput);
+            KrustyKrabTaskCommand command = this.extractCommand(firstWord, krabsInput);
             command.execute(guiWindow, taskList);
         } catch (StringIndexOutOfBoundsException e) {
             guiWindow.displaySpongebobResponse("Please provide more details for your request.");
@@ -55,7 +43,7 @@ public enum ActionParser {
         }
     }
 
-    private static KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
+    private KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
             throws StringIndexOutOfBoundsException {
         switch (firstWord) {
         case "list":

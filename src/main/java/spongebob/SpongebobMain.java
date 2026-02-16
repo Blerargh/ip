@@ -12,6 +12,7 @@ import spongebob.ui.components.MainWindow;
 public class SpongebobMain {
     private KrustyKrabTaskStorage taskStorage = new KrustyKrabTaskStorage();
     private KrustyKrabTaskList taskList;
+    private ActionParser actionParser = new ActionParser();
 
     /**
      * Imports the task list from storage.
@@ -37,6 +38,6 @@ public class SpongebobMain {
      */
     public void getResponse(String krabsInput, MainWindow mainWindow) {
         krabsInput = krabsInput.trim();
-        ActionParser.fromStringToExecuteCommand(krabsInput, this.taskList, mainWindow);
+        this.actionParser.fromStringToExecuteCommand(krabsInput, this.taskList, mainWindow);
     }
 }
