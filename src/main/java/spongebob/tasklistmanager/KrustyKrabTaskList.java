@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import spongebob.commands.AddTaskCommand;
 import spongebob.commands.KrustyKrabTaskCommand;
 import spongebob.commands.subcommands.DeleteCommand;
+import spongebob.commands.subcommands.MarkCommand;
 import spongebob.commands.subcommands.UnmarkCommand;
 import spongebob.exceptions.SpongebobException;
 import spongebob.tasktype.KrustyKrabDelivery;
@@ -276,7 +277,7 @@ public class KrustyKrabTaskList {
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new UnmarkCommand(String.valueOf(index + 1)));
+            this.undoCommands.add(new MarkCommand(String.valueOf(index + 1)));
         }
     }
 
