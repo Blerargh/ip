@@ -15,7 +15,7 @@ public class KrustyKrabTaskListTest {
         String invalidDeliveryDetails = "Deliver Krabby Patties /by 2024/12/31 18:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addDelivery(invalidDeliveryDetails, this.dummyWindow);
+            taskList.addDelivery(invalidDeliveryDetails, this.dummyWindow, false);
         });
 
         String expectedMessage = "Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.";
@@ -30,7 +30,7 @@ public class KrustyKrabTaskListTest {
         String missingDetails = "  /by 31-12-2024 18:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addDelivery(missingDetails, this.dummyWindow);
+            taskList.addDelivery(missingDetails, this.dummyWindow, false);
         });
 
         String expectedMessage = "What delivery order would you like to make?";
@@ -45,7 +45,7 @@ public class KrustyKrabTaskListTest {
         String invalidReservationDetails = "Reserve Patrick's birthday /from 2019/12/31 18:00 /to 2099/12/31 20:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addReservation(invalidReservationDetails, this.dummyWindow);
+            taskList.addReservation(invalidReservationDetails, this.dummyWindow, false);
         });
 
         String expectedMessage = "Please enter the reservation time in the format dd-MM-yyyy HH:mm.";
@@ -60,7 +60,7 @@ public class KrustyKrabTaskListTest {
         String missingDetails = "  /from 31-12-2024 18:00 /to 31-12-2990 20:00";
 
         Exception exception = Assertions.assertThrows(SpongebobException.class, () -> {
-            taskList.addReservation(missingDetails, this.dummyWindow);
+            taskList.addReservation(missingDetails, this.dummyWindow, false);
         });
 
         String expectedMessage = "What reservation would you like to make?";

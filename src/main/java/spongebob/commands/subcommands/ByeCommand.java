@@ -29,11 +29,15 @@ public class ByeCommand extends KrustyKrabTaskCommand {
      *
      * @param guiWindow The main GUI window to display the results in.
      * @param taskList  The Krusty Krab task list to operate on.
+     * @param isUndo    Whether the command is being executed as part of an undo
+     *                  operation. Not relevant for the bye command, as it does not
+     *                  modify the task list or display any response in the GUI when
+     *                  executed as part of an undo operation.
      * @throws SpongebobException If there is an error during command execution,
      *                            such as additional input for the bye command.
      */
     @Override
-    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList) throws SpongebobException {
+    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList, boolean isUndo) throws SpongebobException {
         this.assertValidInput();
         System.exit(0);
     }

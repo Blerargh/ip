@@ -23,9 +23,16 @@ public class EmptyCommand extends KrustyKrabTaskCommand {
      * indicating that no request was made. Since this command does not perform any
      * operations on the task list, it simply returns without modifying the task
      * list.
+     *
+     * @param guiWindow The main GUI window to display the results in.
+     * @param taskList  The Krusty Krab task list to operate on, which is not
+     *                  modified by this command since it is an empty command.
+     * @param isUndo    Whether the command is being executed as part of an undo
+     *                  operation. Not relevant for the empty command, as it does
+     *                  not perform any operations on the task list.
      */
     @Override
-    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList) {
+    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList, boolean isUndo) {
         guiWindow.displaySpongebobResponse("Did you make a request?");
     }
 

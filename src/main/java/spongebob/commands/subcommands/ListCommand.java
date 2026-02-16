@@ -30,12 +30,19 @@ public class ListCommand extends KrustyKrabTaskCommand {
      *
      * @param guiWindow The main GUI window to display the results in.
      * @param taskList  The Krusty Krab task list to operate on.
+     * @param isUndo    Whether the command is being executed as part of an undo
+     *                  operation. Not relevant for the list command, as it does not
+     *                  modify the task list or display any response in the GUI when
+     *                  executed as part of an undo operation, since the list
+     *                  command is typically used to display the current state of
+     *                  the task list and does not have any specific response to
+     *                  display when executed as part of an undo operation.
      * @throws SpongebobException If there is an error during command execution,
      *                            such as additional input for the list command or
      *                            issues with the task list.
      */
     @Override
-    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList) throws SpongebobException {
+    public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList, boolean isUndo) throws SpongebobException {
         this.assertValidInput();
         taskList.printTasks(guiWindow);
     }
