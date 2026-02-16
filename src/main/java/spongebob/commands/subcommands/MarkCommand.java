@@ -9,10 +9,33 @@ import spongebob.ui.components.MainWindow;
  * Represents the command to mark a task in the task list as completed.
  */
 public class MarkCommand extends KrustyKrabTaskCommand {
+    /**
+     * Constructor for MarkCommand.
+     *
+     * @param inputDetails The details of the command input, which should be the
+     *                     index of the task to be marked as completed in the task
+     *                     list. The index should be a positive integer
+     *                     corresponding to the task's position in the list (1-based
+     *                     index).
+     */
     public MarkCommand(String inputDetails) {
         super(inputDetails);
     }
 
+    /**
+     * Executes the command to mark a task in the task list as completed. This
+     * method first validates the input details to ensure that it is a valid index.
+     * If the input is valid, the specified task will be marked as completed in the
+     * task list. If the input is invalid or if there is an issue with marking the
+     * task in the list, a SpongebobException will be thrown with an appropriate
+     * error message.
+     *
+     * @param guiWindow The main GUI window to display the results in.
+     * @param taskList  The Krusty Krab task list to operate on.
+     * @throws SpongebobException If there is an error during command execution,
+     *                            such as invalid input or issues with the task
+     *                            list.
+     */
     @Override
     public void execute(MainWindow guiWindow, KrustyKrabTaskList taskList) throws SpongebobException {
         this.assertValidInput();
@@ -20,6 +43,16 @@ public class MarkCommand extends KrustyKrabTaskCommand {
         taskList.markTask(indexToMark, guiWindow);
     }
 
+    /**
+     * Asserts that the input details for the MarkCommand are valid. This method
+     * checks that the input is a positive integer corresponding to a valid task
+     * index in the task list. If the input is invalid, a SpongebobException will be
+     * thrown with an appropriate error message.
+     *
+     * @throws SpongebobException If the input details are invalid for the
+     *                            MarkCommand, such as non-integer input or an index
+     *                            that is out of bounds.
+     */
     @Override
     protected void assertValidInput() throws SpongebobException {
         if (!this.getInputDetails().matches("\\d+")) {
