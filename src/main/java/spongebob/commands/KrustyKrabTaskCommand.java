@@ -56,4 +56,16 @@ public abstract class KrustyKrabTaskCommand {
      * @throws SpongebobException If the input details are invalid for the command.
      */
     protected abstract void assertValidInput() throws SpongebobException;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || this.getClass() != obj.getClass()) {
+            return false;
+        }
+        KrustyKrabTaskCommand other = (KrustyKrabTaskCommand) obj;
+        return this.inputDetails.equals(other.inputDetails);
+    }
 }
