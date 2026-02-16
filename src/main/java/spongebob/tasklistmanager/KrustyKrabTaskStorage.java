@@ -27,6 +27,8 @@ public class KrustyKrabTaskStorage {
      * @param taskList The list of tasks to be saved.
      */
     public static void saveTasks(ArrayList<KrustyKrabTask> taskList) throws SpongebobException {
+        assert taskList != null : "Task list should not be null";
+
         Path path = Paths.get("src/main/java/data");
         try {
             Files.createDirectories(path);
@@ -52,12 +54,8 @@ public class KrustyKrabTaskStorage {
         KrustyKrabTaskList taskList = new KrustyKrabTaskList();
 
         try {
-            ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(filePath);
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                KrustyKrabTask loadedTask = this.convertFileLineToTask(line);
-                taskList.addTask(loadedTask);
-            }
+            Files.lines(filePath).map(line -> this.convertFileLineToTask(line))
+                    .forEach(taskList::addTask);
         } catch (IOException e) {
             throw new SpongebobException("No saved tasks found.");
         }

@@ -57,6 +57,9 @@ public class ActionParser {
      */
     public KrustyKrabTaskCommand extractCommand(String firstWord, String krabsInput)
             throws StringIndexOutOfBoundsException {
+        assert firstWord != null : "First word should not be null";
+        assert krabsInput != null : "User input should not be null";
+
         switch (firstWord) {
         case "list":
             return new ListCommand(krabsInput.substring(4).trim());

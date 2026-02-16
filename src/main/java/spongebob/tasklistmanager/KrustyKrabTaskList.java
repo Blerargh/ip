@@ -29,6 +29,8 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void printTasks(MainWindow guiWindow) {
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         String displayString = "";
 
         displayString += "Here are the tasks in your Krusty Krab task list:";
@@ -63,6 +65,9 @@ public class KrustyKrabTaskList {
      * @throws SpongebobException If there is an error with saving the tasks.
      */
     public void addOrder(String orderDetails, MainWindow guiWindow) throws SpongebobException {
+        assert orderDetails != null : "Order details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve order details
         String taskDetails = orderDetails.trim();
         KrustyKrabOrder newOrder = new KrustyKrabOrder(taskDetails);
@@ -84,12 +89,19 @@ public class KrustyKrabTaskList {
      *                            details.
      */
     public void addDelivery(String deliveryDetails, MainWindow guiWindow) throws SpongebobException {
+        assert deliveryDetails != null : "Delivery details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve delivery details
-        String taskDetails = deliveryDetails.split("/by")[0].trim();
+        String[] partDetails = deliveryDetails.split("/by");
+        assert partDetails.length == 2
+                : "Delivery details should contain both task details and delivery deadline separated by '/by'";
+
+        String taskDetails = partDetails[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What delivery order would you like to make?");
         }
-        String deliveryDeadline = deliveryDetails.split("/by")[1].trim();
+        String deliveryDeadline = partDetails[1].trim();
 
         // Check for valid date time format
         LocalDateTime deliverBy;
@@ -120,13 +132,25 @@ public class KrustyKrabTaskList {
      *                            reservation details.
      */
     public void addReservation(String reservationDetails, MainWindow guiWindow) throws SpongebobException {
+        assert reservationDetails != null : "Reservation details string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         // Retrieve reservation details
-        String taskDetails = reservationDetails.split("/from")[0].trim();
+        String[] partDetailsSplitByFrom = reservationDetails.split("/from");
+        assert partDetailsSplitByFrom.length == 2
+                : "There should only be a single '/from' separator in the reservation details";
+
+        String taskDetails = partDetailsSplitByFrom[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What reservation would you like to make?");
         }
-        String reservationStartTime = reservationDetails.split("/from")[1].split("/to")[0].trim();
-        String reservationEndTime = reservationDetails.split("/to")[1].trim();
+
+        String[] partDetailsSplitByTo = partDetailsSplitByFrom[1].split("/to");
+        assert partDetailsSplitByTo.length == 2
+                : "There should only be a single '/to' separator in the reservation details";
+
+        String reservationStartTime = partDetailsSplitByTo[0].trim();
+        String reservationEndTime = partDetailsSplitByTo[1].trim();
 
         // Check for valid date time format
         LocalDateTime startTime;
@@ -161,8 +185,9 @@ public class KrustyKrabTaskList {
      * @throws SpongebobException If the provided index is out of bounds.
      */
     public void deleteTask(int index, MainWindow guiWindow) throws SpongebobException {
-        String displayString = "";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
 
+        String displayString = "";
         KrustyKrabTask task = this.getTask(index);
         this.krustyKrabOrderList.remove(index);
         displayString += "Task removed!\n" + task.toString();
@@ -180,6 +205,7 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      * @throws SpongebobException If the provided index is out of bounds.
      */
+
     public void markTask(int index, MainWindow guiWindow) throws SpongebobException {
         String displayString = "";
         KrustyKrabTask task = this.getTask(index);
@@ -204,6 +230,7 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      * @throws SpongebobException If the provided index is out of bounds.
      */
+
     public void unmarkTask(int index, MainWindow guiWindow) throws SpongebobException {
         String displayString = "";
         KrustyKrabTask task = this.getTask(index);
@@ -228,6 +255,9 @@ public class KrustyKrabTaskList {
      * @param guiWindow The main GUI window to display the results in.
      */
     public void findTasks(String keyword, MainWindow guiWindow) {
+        assert keyword != null : "Keyword string should not be null";
+        assert guiWindow != null : "MainWindow guiWindow should not be null";
+
         String displayString = "Here are the matching tasks in your Krusty Krab task list:";
 
         boolean anyFound = false;
