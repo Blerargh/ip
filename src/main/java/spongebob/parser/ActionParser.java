@@ -10,6 +10,7 @@ import spongebob.commands.subcommands.EmptyCommand;
 import spongebob.commands.subcommands.FindCommand;
 import spongebob.commands.subcommands.ListCommand;
 import spongebob.commands.subcommands.MarkCommand;
+import spongebob.commands.subcommands.UndoCommand;
 import spongebob.commands.subcommands.UnknownCommand;
 import spongebob.commands.subcommands.UnmarkCommand;
 import spongebob.exceptions.SpongebobException;
@@ -35,7 +36,7 @@ public class ActionParser {
 
         try {
             KrustyKrabTaskCommand command = this.extractCommand(firstWord, krabsInput);
-            command.execute(guiWindow, taskList);
+            command.execute(guiWindow, taskList, false);
         } catch (StringIndexOutOfBoundsException e) {
             guiWindow.displaySpongebobResponse("Please provide more details for your request.");
         } catch (SpongebobException e) {
@@ -79,6 +80,8 @@ public class ActionParser {
             return new DeleteCommand(krabsInput.substring(6).trim());
         case "find":
             return new FindCommand(krabsInput.substring(4).trim());
+        case "undo":
+            return new UndoCommand(krabsInput.substring(4).trim());
         case "":
             return new EmptyCommand(krabsInput);
         default:

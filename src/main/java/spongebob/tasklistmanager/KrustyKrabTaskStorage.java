@@ -55,7 +55,7 @@ public class KrustyKrabTaskStorage {
 
         try {
             Files.lines(filePath).map(line -> this.convertFileLineToTask(line))
-                    .forEach(taskList::addTask);
+                    .forEach(task -> taskList.addTask(taskList.getTaskCount(), task));
         } catch (IOException e) {
             throw new SpongebobException("No saved tasks found.");
         }
