@@ -107,10 +107,10 @@ public class KrustyKrabTaskStorage {
     private KrustyKrabReservation parseReservationLine(String line) {
         String reservationDetails = line.substring(7, line.indexOf("(from:") - 1);
         LocalDateTime reservationFrom = LocalDateTime
-                .parse(line.substring(line.indexOf("(from:") + 6, line.indexOf("(to:") - 1),
+                .parse(line.substring(line.indexOf("(from:") + 7, line.indexOf("to:") - 1),
                         KrustyKrabTaskList.DATE_TIME_FORMATTER);
         LocalDateTime reservationTo = LocalDateTime
-                .parse(line.substring(line.indexOf("(to:") + 4, line.length() - 1),
+                .parse(line.substring(line.indexOf("to:") + 4, line.length() - 1),
                         KrustyKrabTaskList.DATE_TIME_FORMATTER);
 
         return new KrustyKrabReservation(reservationDetails, reservationFrom, reservationTo);
