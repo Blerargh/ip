@@ -63,5 +63,11 @@ public class MarkCommand extends KrustyKrabTaskCommand {
         if (!this.getInputDetails().matches("\\d+")) {
             throw new SpongebobException("Which task are you referring to?");
         }
+
+        // Assert that task index is strictly positive integer
+        int taskIndex = Integer.parseInt(this.getInputDetails()) - 1;
+        if (taskIndex < 0) {
+            throw new SpongebobException("Which task are you referring to?");
+        }
     }
 }

@@ -54,12 +54,18 @@ public class UnmarkCommand extends KrustyKrabTaskCommand {
      * thrown with an appropriate error message.
      *
      * @throws SpongebobException If the input details are invalid for the
-     *                            UnmarkCommand, such as non-integer input or an
-     *                            index that is out of bounds.
+     *                            UnmarkCommand, such as non-integer input
+     *                            or a non-positive integer index.
      */
     @Override
     protected void assertValidInput() throws SpongebobException {
         if (!this.getInputDetails().matches("\\d+")) {
+            throw new SpongebobException("Which task are you referring to?");
+        }
+
+        // Assert that task index is strictly positive integer
+        int taskIndex = Integer.parseInt(this.getInputDetails()) - 1;
+        if (taskIndex < 0) {
             throw new SpongebobException("Which task are you referring to?");
         }
     }

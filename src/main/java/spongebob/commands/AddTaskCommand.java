@@ -64,6 +64,6 @@ public class AddTaskCommand extends KrustyKrabTaskCommand {
     @Override
     protected void assertValidInput() {
         // No validation needed for AddTaskCommand since it is reserved for undoing the
-        // delete command
+        // delete command and there is no input to check
     }
 }
