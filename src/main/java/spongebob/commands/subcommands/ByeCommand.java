@@ -54,7 +54,7 @@ public class ByeCommand extends KrustyKrabTaskCommand {
      */
     @Override
     protected void assertValidInput() throws SpongebobException {
-        if (!this.getInputDetails().equals("")) {
+        if (!this.getInputDetails().isEmpty()) {
             throw new SpongebobException(
                     "Mr. Krabs, the 'bye' command should not have any additional details!");
         }

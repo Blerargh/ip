@@ -68,11 +68,13 @@ public class AddReservationCommand extends KrustyKrabTaskCommand {
         }
 
         if (inputDetails.split("/from").length < 2) {
-            throw new SpongebobException("Please provide both the start and end dates for the reservation.");
+            throw new SpongebobException(
+                    "Please provide both the start and end dates separated by '/from' and '/to' for the reservation.");
         }
 
         if (inputDetails.split("/to").length < 2) {
-            throw new SpongebobException("Please provide both the start and end dates for the reservation.");
+            throw new SpongebobException(
+                    "Please provide both the start and end dates separated by '/from' and '/to' for the reservation.");
         }
 
         if (inputDetails.split("/from").length > 2 || inputDetails.split("/to").length > 2) {
