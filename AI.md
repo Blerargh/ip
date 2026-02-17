@@ -18,10 +18,11 @@
 
 - Copilot was effective in auto-completing JavaDoc documentation for similar classes,
   as it seemed to quickly recognise the patterns in the documentation or JUnit test methods
-  of similar classes, which sped up the mundane process of writing repetitive code for multiple
-  similar classes implementing similar assertion checks.
+  of similar classes, which sped up the mundane process of writing repetitive code or documentation
+  for multiple similar classes implementing similar assertion checks.
 
 - In the generation of the PR comment, summarisation of code changes tend to miss out on certain minor details,
   perhaps due to large context size when major changes are made in one go
 
-  Overall time saved: Hours
+  Overall time saved: Easily hours of time, as the process of writing documentation and
+  tests for multiple similar classes is very time-consuming,
