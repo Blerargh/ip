@@ -94,7 +94,7 @@ public class KrustyKrabTaskList {
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size() - 1)));
+            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size())));
         }
     }
 
@@ -132,7 +132,7 @@ public class KrustyKrabTaskList {
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size() - 1)));
+            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size())));
         }
     }
 
@@ -178,7 +178,7 @@ public class KrustyKrabTaskList {
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size() - 1)));
+            this.undoCommands.add(new DeleteCommand(String.valueOf(this.krustyKrabOrderList.size())));
         }
     }
 
