@@ -18,7 +18,7 @@ public class KrustyKrabTaskListTest {
             taskList.addDelivery(invalidDeliveryDetails, this.dummyWindow, false);
         });
 
-        String expectedMessage = "Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.";
+        String expectedMessage = "Please enter the date and time in the correct format: dd-MM-yyyy HH:mm.";
         String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -48,7 +48,7 @@ public class KrustyKrabTaskListTest {
             taskList.addReservation(invalidReservationDetails, this.dummyWindow, false);
         });
 
-        String expectedMessage = "Please enter the reservation time in the format dd-MM-yyyy HH:mm.";
+        String expectedMessage = "Please enter the date and time in the correct format: dd-MM-yyyy HH:mm.";
         String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

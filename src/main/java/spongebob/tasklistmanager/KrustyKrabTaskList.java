@@ -112,9 +112,6 @@ public class KrustyKrabTaskList {
 
         // Retrieve delivery details
         String[] partDetails = deliveryDetails.split("/by");
-        assert partDetails.length == 2
-                : "Delivery details should contain both task details and delivery deadline separated by '/by'";
-
         String taskDetails = partDetails[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What delivery order would you like to make?");
@@ -123,11 +120,7 @@ public class KrustyKrabTaskList {
 
         // Check for valid date time format
         LocalDateTime deliverBy;
-        try {
-            deliverBy = LocalDateTime.parse(deliveryDeadline, KrustyKrabTaskList.DATE_TIME_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new SpongebobException("Please enter the delivery deadline in the format dd-MM-yyyy HH:mm.");
-        }
+        deliverBy = this.parseDateTime(deliveryDeadline);
 
         // If valid, add delivery to list
         KrustyKrabDelivery newDelivery = new KrustyKrabDelivery(taskDetails, deliverBy);
@@ -158,30 +151,18 @@ public class KrustyKrabTaskList {
 
         // Retrieve reservation details
         String[] partDetailsSplitByFrom = reservationDetails.split("/from");
-        assert partDetailsSplitByFrom.length == 2
-                : "There should only be a single '/from' separator in the reservation details";
-
         String taskDetails = partDetailsSplitByFrom[0].trim();
         if (taskDetails.isEmpty()) {
             throw new SpongebobException("What reservation would you like to make?");
         }
 
         String[] partDetailsSplitByTo = partDetailsSplitByFrom[1].split("/to");
-        assert partDetailsSplitByTo.length == 2
-                : "There should only be a single '/to' separator in the reservation details";
-
         String reservationStartTime = partDetailsSplitByTo[0].trim();
         String reservationEndTime = partDetailsSplitByTo[1].trim();
 
         // Check for valid date time format
-        LocalDateTime startTime;
-        LocalDateTime endTime;
-        try {
-            startTime = LocalDateTime.parse(reservationStartTime, KrustyKrabTaskList.DATE_TIME_FORMATTER);
-            endTime = LocalDateTime.parse(reservationEndTime, KrustyKrabTaskList.DATE_TIME_FORMATTER);
-        } catch (DateTimeParseException e) {
-            throw new SpongebobException("Please enter the reservation time in the format dd-MM-yyyy HH:mm.");
-        }
+        LocalDateTime startTime = this.parseDateTime(reservationStartTime);
+        LocalDateTime endTime = this.parseDateTime(reservationEndTime);
 
         if (endTime.isBefore(startTime)) {
             throw new SpongebobException("What do you mean your reservation ends before it starts?");
@@ -344,6 +325,14 @@ public class KrustyKrabTaskList {
             return this.krustyKrabOrderList.get(index);
         } else {
             throw new SpongebobException("Which task are you referring to?");
+        }
+    }
+
+    private LocalDateTime parseDateTime(String dateTimeString) throws SpongebobException {
+        try {
+            return LocalDateTime.parse(dateTimeString, KrustyKrabTaskList.DATE_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new SpongebobException("Please enter the date and time in the correct format: dd-MM-yyyy HH:mm.");
         }
     }
 }
