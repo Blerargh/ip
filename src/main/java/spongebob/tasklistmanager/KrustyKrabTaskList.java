@@ -218,19 +218,23 @@ public class KrustyKrabTaskList {
         String displayString = "";
         KrustyKrabTask task = this.getTask(index);
 
+        boolean hasChanged = false;
         if (!task.isCompleted()) {
             task.markComplete();
             displayString += "Task complete!\n" + task.toString();
 
             KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             displayString += "\nTasks saved successfully!";
+            hasChanged = true;
         } else {
             displayString += "This task is already completed!\n" + task.toString();
         }
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new UnmarkCommand(String.valueOf(index + 1)));
+            if (hasChanged) {
+                this.undoCommands.add(new UnmarkCommand(String.valueOf(index + 1)));
+            }
         }
     }
 
@@ -246,19 +250,23 @@ public class KrustyKrabTaskList {
         String displayString = "";
         KrustyKrabTask task = this.getTask(index);
 
+        boolean hasChanged = false;
         if (task.isCompleted()) {
             task.markIncomplete();
             displayString += "Task cancelled!\n" + task.toString();
 
             KrustyKrabTaskStorage.saveTasks(this.krustyKrabOrderList);
             displayString += "\nTasks saved successfully!";
+            hasChanged = true;
         } else {
             displayString += "This task is not completed yet!\n" + task.toString();
         }
 
         if (!isUndo) {
             guiWindow.displaySpongebobResponse(displayString);
-            this.undoCommands.add(new MarkCommand(String.valueOf(index + 1)));
+            if (hasChanged) {
+                this.undoCommands.add(new MarkCommand(String.valueOf(index + 1)));
+            }
         }
     }
 
@@ -274,15 +282,15 @@ public class KrustyKrabTaskList {
 
         String displayString = "Here are the matching tasks in your Krusty Krab task list:";
 
-        boolean anyFound = false;
+        boolean isFound = false;
         for (KrustyKrabTask task : this.krustyKrabOrderList) {
             if (task.matchesKeyword(keyword)) {
-                anyFound = true;
+                isFound = true;
                 displayString += '\n' + task.toString();
             }
         }
 
-        if (!anyFound) {
+        if (!isFound) {
             displayString += '\n' + "...No matching tasks found, are you sure you made such a request?";
         }
 
